@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ver Usuarios</title>
+    <!-- Favicon -->
+  <link rel="shortcut icon" href="images/Logo.png">
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<body class="bg-light">
+    <div class="container py-4">
+        <h1 class="text-center mb-4">Admin - Ver Usuarios</h1>
+
+        <!-- Refresh Users Button -->
+        <div class="d-flex justify-content-end mb-3">
+            <button id="refreshUsers" class="btn btn-primary" onclick="fetchUsers()">Refresh Users</button>
+        </div>
+
+        <!-- View All Users -->
+        <h2 class="mb-3">All Users</h2>
+        <div class="table-responsive">
+            <table id="usersTable" class="table table-bordered table-striped table-hover">
+                <thead class="table-primary">
+                    <tr>
+                        <th>Username</th>
+                        <th>Role</th>
+                        <th>Membership</th>
+                        <th>Password</th>
+                        <th>Orders</th>
+                        <th>Limits</th>
+                        <th>Usage</th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        const viewUsersUrl = "https://j89c3i4kpe.execute-api.us-east-1.amazonaws.com/12ClickProduction/users";
+
+        // View All Users
+        async function fetchUsers() {
+            try {
+                const response = await fetch(viewUsersUrl);
+                if (!response.ok) {
+                    throw new Error(`Error fetching users: ${response.statusText}`);
+                }
+                const users = await response.json();
+
+                const tbody = document.querySelector("#usersTable tbody");
+                tbody.innerHTML = ""; // Clear existing rows
+                users.forEach((user) => {
+                    const orders = user.orders ? JSON.stringify(user.orders) : 'N/A';
+                    const limits = user.limits ? JSON.stringify(user.limits) : 'N/A';
+                    const usage = user.usage ? JSON.stringify(user.usage) : 'N/A';
+
+                    const row = `<tr>
+                        <td>${user.username}</td>
+                        <td>${user.role}</td>
+                        <td>${user.membership}</td>
+                        <td>${user.password || 'N/A'}</td>
+                        <td>${orders}</td>
+                        <td>${limits}</td>
+                        <td>${usage}</td>
+                    </tr>`;
+                    tbody.innerHTML += row;
+                });
+            } catch (error) {
+                console.error(error);
+                alert("Failed to load users.");
+            }
+        }
+
+        // Initial Fetch on Page Load
+        fetchUsers();
+    </script>
+</body>
+
+</html>

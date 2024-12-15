@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>12Click - Easy as a Click!</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <!-- Favicon-->
+    <link rel="shortcut icon" href="images/Logo.png">
+    <style>
+        body {
+            background-color: #f9f9f9;
+            font-family: 'Roboto', sans-serif;
+            margin: 20px;
+        }
+    
+        header img {
+            max-width: 150px;
+            margin-bottom: 20px;
+        }
+    
+        header h2 {
+            font-size: 1.8rem;
+            color: #06396D;
+            font-weight: 700;
+        }
+    
+        form {
+            background: #ffffff;
+            border: 1px solid #eaeaea;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+        }
+    
+        label {
+            font-weight: 500;
+            color: #333;
+        }
+    
+        input, textarea, select {
+            border-radius: 6px;
+            border: 1px solid #ced4da;
+            padding: 10px;
+            transition: all 0.2s ease;
+        }
+    
+        input:focus, textarea:focus, select:focus {
+            border-color: #0670CE;
+            box-shadow: 0 0 5px rgba(6, 112, 206, 0.5);
+        }
+    
+        button {
+            background: #0670CE;
+            border: none;
+            color: #fff;
+            padding: 10px 20px;
+            font-size: 1rem;
+            font-weight: 500;
+            border-radius: 8px;
+            transition: background-color 0.3s ease;
+        }
+    
+        button:hover {
+            background: #055CAB;
+        }
+    
+        .form-check-label {
+            color: #555;
+        }
+    
+        footer {
+            margin-top: 30px;
+            font-size: 0.9rem;
+            color: #888;
+        }
+    
+        footer a {
+            color: #0670CE;
+            text-decoration: none;
+        }
+    
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        #loading { display: none; }
+    </style>
+</head>
+<body>
+
+<div class="container mt-5">
+    <header class="text-center mb-4">
+        <img src="images/barlogo.png" alt="Logo" class="img-fluid" style="max-width: 200px; margin-bottom: 20px; margin-top: 20px;">
+        <h2>Formulario de Consulta para Creación de Sitio Web</h2>
+    </header>
+    
+    <form id="inquiryForm">
+        <div class="form-group">
+            <label for="businessName">Nombre del Negocio:</label>
+            <input type="text" class="form-control" id="businessName" name="businessName" required>
+        </div>
+        <div class="form-group">
+            <label for="contactName">Nombre de Contacto:</label>
+            <input type="text" class="form-control" id="contactName" name="contactName" required>
+        </div>
+        <div class="form-group">
+            <label for="email">Correo Electrónico:</label>
+            <input type="email" class="form-control" id="email" name="email" required>
+        </div>
+        <div class="form-group">
+            <label for="phone">Teléfono:</label>
+            <input type="tel" class="form-control" id="phone" name="phone" required>
+        </div>
+        <div class="form-group">
+            <label for="websiteType">¿Qué tipo de sitio web necesitas?</label>
+            <select class="form-control" id="websiteType" name="websiteType" required>
+                <option value="">Seleccionar...</option>
+                <option value="Landing Page">Landing Page</option>
+                <option value="E-commerce">E-commerce</option>
+                <option value="Portafolio">Portafolio</option>
+                <option value="Blog">Blog</option>
+                <option value="Evento">Evento</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="budget">¿Cómo te enteraste de nosotros?</label>
+            <select class="form-control" id="budget" name="budget" required>
+                <option value="">Selecciona una opción</option>
+                <option value="Facebook">Facebook</option>
+                <option value="TikTok">TikTok</option>
+                <option value="Instagram">Instagram</option>
+                <option value="Otro">Otro</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label>¿Necesitarás un enlace de pago?</label>
+            <div class="form-check">
+                <input class="form-check-input" type="radio" id="paypal" name="paymentMethod" value="Paypal" required>
+                <label class="form-check-label" for="paypal">PayPal</label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="radio" id="paymentLink" name="paymentMethod" value="Link de pago con Tarjeta" required>
+                <label class="form-check-label" for="paymentLink">Link de pago con Tarjeta</label>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="projectDetails">Por favor, describe tu proyecto:</label>
+            <textarea class="form-control" id="projectDetails" name="projectDetails" rows="4" required></textarea>
+        </div>
+        <div class="text-center">
+            <button type="submit" class="btn btn-primary">Enviar Consulta</button>
+        </div>
+    </form>
+
+    <div id="loading" class="text-center mt-3">
+        <div class="spinner-border" role="status">
+            <span class="sr-only">Cargando...</span>
+        </div>
+        <p>Enviando tu consulta...</p>
+    </div>
+    
+    <footer class="text-center mt-5">
+        <p>&copy; 2024 12Click. Todos los derechos reservados.</p>
+        <p>Contacto: <a href="mailto:12clickinfo@gmail.com">12clickinfo@gmail.com</a></p><br>
+    </footer>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script>
+    document.getElementById('inquiryForm').addEventListener('submit', function(event) {
+        event.preventDefault();
+        
+        const formData = new URLSearchParams(new FormData(this));  // Convert FormData to URLSearchParams
+        document.getElementById('loading').style.display = 'block';
+
+        fetch('https://script.google.com/macros/s/AKfycbx3vfpteK9mrU0xgyXJSWVb0NCEDxgPEnADWm_9q2Pk3bqlvZ2f0VdvOw3rgu2zWHMbQg/exec', {  // Replace 'YOUR_WEB_APP_URL' with the actual Google Apps Script Web App URL
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'  // Ensures data is sent in a format Google Apps Script can handle
+            },
+            body: formData
+        }).then(response => response.text()).then(result => {
+            alert(result === 'Success' ? 'Consulta enviada con éxito.' : 'Hubo un error al enviar la consulta.');
+            document.getElementById('inquiryForm').reset();
+            document.getElementById('loading').style.display = 'none';
+        }).catch(error => {
+            console.error('Error:', error);
+            alert('Error al enviar la consulta.');
+            document.getElementById('loading').style.display = 'none';
+        });
+    });
+</script>
+
+</body>
+</html>
+

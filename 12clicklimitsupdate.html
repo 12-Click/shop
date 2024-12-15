@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Actualiza el Límite de la Membresía</title>
+    <!-- Favicon -->
+  <link rel="shortcut icon" href="images/Logo.png">
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f7f9fc;
+            font-family: 'Arial', sans-serif;
+            padding-top: 50px;
+        }
+        .container {
+            max-width: 600px;
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            color: #343a40;
+            font-weight: 700;
+            margin-bottom: 20px;
+            font-size: 2.5rem;
+        }
+        .form-label {
+            font-weight: 600;
+            color: #495057;
+        }
+        .form-control {
+            border-radius: 10px;
+            border: 1px solid #ced4da;
+            padding: 12px 15px;
+            font-size: 1.1rem;
+        }
+        .form-control:focus {
+            border-color: #007bff;
+            box-shadow: 0 0 0 0.25rem rgba(38, 143, 255, 0.25);
+        }
+        .btn-primary {
+            width: 100%;
+            padding: 12px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            background-color: #007bff;
+            border-color: #007bff;
+            border-radius: 10px;
+            transition: background-color 0.3s;
+        }
+        .btn-primary:hover {
+            background-color: #0056b3;
+            border-color: #0056b3;
+        }
+        .mt-4 {
+            margin-top: 30px;
+        }
+        .alert-custom {
+            font-family: Arial, sans-serif;
+            font-size: 1rem;
+            border-radius: 8px;
+            padding: 20px;
+            display: none; /* Hidden by default */
+        }
+        .alert-custom pre {
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+        .mb-3 {
+            margin-bottom: 20px; /* Space between form fields */
+        }
+        .btn-primary {
+            margin-bottom: 20px; /* Space between button and alert */
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1 style="text-align: center;">Actualiza el Límite de la Membresía</h1>
+    <form id="limitsForm">
+        <div class="mb-3">
+            <label for="username" class="form-label">Username</label>
+            <input type="text" class="form-control" id="username" name="username" required>
+        </div>
+
+        <div class="mb-3">
+            <label for="ar_ads" class="form-label">AR Ads</label>
+            <input type="number" class="form-control" id="ar_ads" name="ar_ads" value="0" required>
+        </div>
+
+        <div class="mb-3">
+            <label for="ar_selfies" class="form-label">AR Selfies</label>
+            <input type="number" class="form-control" id="ar_selfies" name="ar_selfies" value="0" required>
+        </div>
+
+        <div class="mb-3">
+            <label for="catalogs" class="form-label">Catalogs</label>
+            <input type="number" class="form-control" id="catalogs" name="catalogs" value="0" required>
+        </div>
+
+        <div class="mb-3">
+            <label for="webpages" class="form-label">Webpages</label>
+            <input type="number" class="form-control" id="webpages" name="webpages" value="0" required>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Update Limits</button>
+    </form>
+
+    <!-- Response Area (Alert Style) -->
+    <div id="response" class="alert-custom alert" role="alert"></div>
+</div>
+
+<!-- Bootstrap JS & Popper -->
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
+
+<script>
+    document.getElementById("limitsForm").addEventListener("submit", async function(event) {
+        event.preventDefault(); // Prevent form submission
+
+        // Get form values
+        const username = document.getElementById("username").value;
+        const ar_ads = parseInt(document.getElementById("ar_ads").value, 10);
+        const ar_selfies = parseInt(document.getElementById("ar_selfies").value, 10);
+        const catalogs = parseInt(document.getElementById("catalogs").value, 10);
+        const webpages = parseInt(document.getElementById("webpages").value, 10);
+
+        // Create the request payload
+        const payload = {
+            username: username,
+            limits: {
+                ar_ads: ar_ads,
+                ar_selfies: ar_selfies,
+                catalogs: catalogs,
+                webpages: webpages
+            }
+        };
+
+        // API endpoint
+        const apiUrl = "https://j89c3i4kpe.execute-api.us-east-1.amazonaws.com/12ClickProduction/users/limits"; // Replace with your API Gateway endpoint
+
+        try {
+            // Make the POST request
+            const response = await fetch(apiUrl, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(payload)
+            });
+
+            // Display the response as a success alert
+            const responseData = await response.json();
+            document.getElementById("response").classList.remove("alert-danger");
+            document.getElementById("response").classList.add("alert-success");
+            document.getElementById("response").textContent = `Success: ${JSON.stringify(responseData, null, 2)}`;
+            document.getElementById("response").style.display = "block";
+
+        } catch (error) {
+            // Display errors as an error alert
+            document.getElementById("response").classList.remove("alert-success");
+            document.getElementById("response").classList.add("alert-danger");
+            document.getElementById("response").textContent = `Error: ${error.message}`;
+            document.getElementById("response").style.display = "block";
+        }
+    });
+</script>
+
+</body>
+</html>

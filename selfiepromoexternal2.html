@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>12Click - Easy as a Click!</title>
+     <!-- Favicon-->
+	 <link rel="shortcut icon" href="images/Logo.png">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+
+        body {
+            background-color: #f8f9fa;
+            animation: glow 1.5s infinite;
+            margin: 20px;
+        }
+    
+        /* General container styles */
+        .container {
+            max-width: 950px;
+            margin: 0 auto;
+            padding: 30px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+    
+        header img {
+            display: block;
+            margin: 0 auto;
+            max-width: 150px;
+        }
+    
+        h2 {
+            color: #040505d0;
+            font-weight: 700;
+            text-align: center;
+            font-size: 1.8rem;
+        }
+    
+        h3 {
+            font-size: 1.4rem;
+            color: #0670CE;
+            text-align: center;
+            margin-top: 30px;
+        }
+    
+        /* Styling the form elements */
+        .form-control, .form-select {
+            border-radius: 6px;
+            border: 1px solid #ced4da;
+            padding: 10px;
+            font-size: 1rem;
+            margin-bottom: 15px;
+        }
+    
+        .form-control:focus, .form-select:focus {
+            border-color: #0670CE;
+            box-shadow: 0 0 5px rgba(6, 112, 206, 0.5);
+        }
+    
+        .btn-primary {
+            background-color: #0670CE;
+            border: none;
+            padding: 12px 20px;
+            font-size: 1rem;
+            color: #fff;
+            border-radius: 8px;
+            transition: background-color 0.3s ease;
+        }
+    
+        .btn-primary:hover {
+            background-color: #055CAB;
+        }
+    
+        .btn-center {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+    
+        .progress {
+            height: 20px;
+            margin-bottom: 20px;
+            background-color: #eaeaea;
+            border-radius: 5px;
+            display: none; /* Initially hidden */
+        }
+    
+        .progress-bar {
+            height: 100%;
+            background-color: #0670CE;
+            text-align: center;
+            color: #fff;
+            line-height: 20px;
+        }
+    
+        #uploadProgressContainer, #formProgressContainer {
+            display: none; /* Hidden by default, shown during upload or form submission */
+        }
+    
+        .text-success {
+            color: #28a745;
+            font-weight: 500;
+        }
+    
+        .text-danger {
+            color: #dc3545;
+            font-weight: 500;
+        }
+    
+        footer {
+            background-color: #f8f9fa;
+            padding: 20px;
+            text-align: center;
+            margin-top: 40px;
+            font-size: 0.9rem;
+        }
+    
+        footer p {
+            color: #555;
+        }
+    
+        footer a {
+            color: #0670CE;
+            text-decoration: none;
+        }
+    
+        footer a:hover {
+            text-decoration: underline;
+        }
+    
+        /* Styling for the footer */
+        footer {
+            margin-top: 30px;
+            text-align: center;
+            font-size: 0.9rem;
+            color: #888;
+        }
+    
+        footer a {
+            color: #0670CE;
+            text-decoration: none;
+        }
+    
+        footer a:hover {
+            text-decoration: underline;
+        }
+        
+    </style>
+</head>
+<body>
+    <!-- Header with Logo -->
+    <header class=" mt-5"><br>
+        <img src="images/barlogo.png" alt="Logo" width="150"> <!-- Replace with your logo URL -->
+    </header>
+
+    <div class="container mt-4">
+        <h2 class="mb-4 text-center" style="color: #040505d0;">Sigue los siguientes pasos para completar tu Pedido!</h2>
+
+        <!-- Status for form submission -->
+        <div id="formStatus" class="mt-3"></div>
+
+        <!-- Step #2: File Upload Form -->
+        <h3 class="text-center mt-5">Paso #2: Suba sus Imágenes</h3><br>
+        <form id="upload-form">
+            <div class="mb-3">
+                <label for="folderName" class="form-label">¿Cómo te gustaría llamar a la Carpeta?:</label>
+                <input type="text" id="folderName" class="form-control" required>
+            </div>
+            <div class="mb-3" style="display: flex; flex-direction: column;">
+                <!-- File Input -->
+                <input type="file" id="fileUpload" multiple class="form-control-file" accept="image/*" style="display: none;">
+                
+                <!-- Styled label to look like a button -->
+                <label class="btn btn-secondary" for="fileUpload" style="cursor: pointer; margin-bottom: 10px;">
+                    Seleccione sus Archivos
+                </label>
+            
+                <!-- File List -->
+<div id="uploadStatus" style="display: flex; align-items: center; flex-wrap: wrap; margin-top: 10px;">
+    <!-- Files will appear here inline -->
+</div>
+
+            <div id="uploadProgressContainer" class="progress mb-3">
+                <div id="uploadProgress" class="progress-bar" role="progressbar" style="width: 0%">0%</div>
+            </div>
+            <div class="btn-center">
+                <button type="button" id="uploadButton" class="btn btn-primary">Enviar Archivos</button></div>
+                <div id="successMessage"></div> <!-- Success message container -->
+                <style>
+                    #successMessage {
+                        margin-top: 10px;
+                        text-align: left; /* Aligns text to the left */
+                    }
+                </style>
+            </div>
+        </form>
+
+        <!-- Status for file upload -->
+        <div id="uploadStatus"></div>
+
+        <!-- Step #3: Complete Order -->
+        <h3 class="text-center mt-5">Paso #3: Finalizar Orden</h3>
+        <div class="btn-center">
+            <button type="button" id="completeOrderButton" class="btn btn-primary">Orden Completada</button>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2024 12Click. Todos los derechos reservados.</p>
+    </footer>
+
+    <script type="module">
+        // Import Firebase and Firebase Storage
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js";
+        import { getStorage, ref, uploadBytesResumable, getDownloadURL } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-storage.js";
+
+        // Your Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyChC97pWd7EuGa3ZasC7go7n5zCVoy_xGo",
+            authDomain: "click-43ca9.firebaseapp.com",
+            projectId: "click-43ca9",
+            storageBucket: "click-selfiepromoar",
+            messagingSenderId: "326998225383",
+            appId: "1:326998225383:web:4378c9ed44597ee2828d42",
+            measurementId: "G-645XZ5Z07K"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const storage = getStorage(app);
+
+//Start here
+
+let fileQueue = [];  // Array to hold files selected by the user
+
+// Update the list of selected files on the UI
+function updateFileList() {
+    const fileList = document.getElementById('uploadStatus');
+    fileList.innerHTML = ''; // Clear the list before updating it
+
+    if (fileQueue.length === 0) {
+        fileList.innerHTML = "<p>Ningun Archivo Seleccionado</p>";
+    } else {
+        // Join file names into a single line with spaces, each with a remove button
+        const fileNamesHTML = fileQueue.map((file, index) => {
+            return `
+                ${file.name} 
+                <span class="remove-file" style="cursor: pointer; color: red; font-weight: bold;" data-index="${index}">×</span>
+            `;
+        }).join(' '); // Join with spaces
+
+        fileList.innerHTML = `<p>${fileNamesHTML}</p>`;
+    }
+}
+
+// Handle file selection
+document.getElementById('fileUpload').addEventListener('change', function () {
+    const newFiles = Array.from(this.files);
+
+    // Add new files to the queue (avoiding duplicates)
+    newFiles.forEach((file) => {
+        if (!fileQueue.some((f) => f.name === file.name)) {
+            fileQueue.push(file);
+        }
+    });
+
+    updateFileList(); // Refresh the displayed list of files
+
+    // Reset the input field to allow selecting the same file if needed
+    this.value = '';
+});
+
+// Handle file removal
+document.getElementById('uploadStatus').addEventListener('click', function (event) {
+    if (event.target && event.target.classList.contains('remove-file')) {
+        const index = event.target.getAttribute('data-index');
+        fileQueue.splice(index, 1); // Remove the file from the queue
+        updateFileList(); // Update the UI after removal
+    }
+});
+
+// Handle file upload
+document.getElementById('uploadButton').addEventListener('click', function () {
+    const folderName = document.getElementById('folderName').value.trim();
+    const successMessageContainer = document.getElementById('successMessage'); // New container for success message
+
+    // Maximum file size in bytes (25 MB)
+    const maxFileSize = 5 * 1024 * 1024;
+    const maxFileCount = 2;
+
+    // Basic validation checks
+    if (!folderName) {
+        alert('Por favor, ingrese un nombre de carpeta.');
+        return;
+    }
+
+    if (fileQueue.length === 0) {
+        alert('Por favor, seleccione al menos un archivo para subir.');
+        return;
+    }
+
+    if (fileQueue.length > maxFileCount) {
+        alert(`No puede subir más de ${maxFileCount} archivos.`);
+        return;
+    }
+
+    // Validate file sizes
+    for (let i = 0; i < fileQueue.length; i++) {
+        if (fileQueue[i].size > maxFileSize) {
+            alert(`El archivo "${fileQueue[i].name}" excede el tamaño máximo permitido de 5 MB.`);
+            return;
+        }
+    }
+
+    const uploadStatus = document.getElementById('uploadStatus');
+    const progressBar = document.getElementById('uploadProgress');
+    const uploadProgressContainer = document.getElementById('uploadProgressContainer');
+    progressBar.style.width = '0%';
+    uploadProgressContainer.style.display = 'block';
+
+    let uploadCount = 0;
+    const totalFiles = fileQueue.length;
+
+    // Clear previous success message
+    successMessageContainer.innerHTML = '';
+
+    // File upload process
+    fileQueue.forEach((file) => {
+        const storageRef = ref(storage, `uploads/${folderName}/${file.name}`);
+        const uploadTask = uploadBytesResumable(storageRef, file);
+
+        uploadTask.on(
+            'state_changed',
+            (snapshot) => {
+                const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                progressBar.style.width = progress + '%';
+                progressBar.textContent = Math.round(progress) + '%';
+            },
+            (error) => {
+                console.error('Upload failed:', error);
+                uploadStatus.innerHTML += `<p class="text-danger">Error al enviar archivo ${file.name}</p>`;
+            },
+            () => {
+                uploadCount++;
+                if (uploadCount === totalFiles) {
+                    successMessageContainer.innerHTML = `<p class="text-success">Archivos subidos con éxito a la carpeta "${folderName}"!</p>`;
+                    fileQueue = []; // Clear the queue after successful upload
+                    updateFileList(); // Clear the file names from the UI
+                    setTimeout(() => {
+                        document.getElementById('upload-form').reset();
+                        uploadProgressContainer.style.display = 'none';
+                        progressBar.style.width = '0%';
+                        progressBar.textContent = '0%';
+                    }, 2000);
+                }
+            }
+        );
+    });
+});
+
+
+
+        // Redirect after order completion
+        document.getElementById('completeOrderButton').addEventListener('click', function() {
+            window.location.href = "index.html"; // Replace with your return URL
+        });
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

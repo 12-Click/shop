@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Area de Miembros</title>
+    <!-- Bootstrap CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome for icon -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="images/Logo.png">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: #f4f4f4;
+            color: #2c3e50;
+        }
+
+        .container {
+            max-width: 100%;
+            margin: 0 auto;
+            background: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+            position: relative;
+        }
+
+        .header {
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .header .logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .header img {
+            width: 50px;
+            height: 50px;
+            margin-right: 10px;
+            border-radius: 50%;
+        }
+
+        .header h1 {
+            font-size: 1.8rem;
+            color: #333;
+            margin: 0;
+            display: inline-block;
+            vertical-align: middle;
+        }
+
+        .header h1 span {
+            color: #e74c3c;
+        }
+
+        .logout-btn {
+            font-size: 1.5rem;
+            color: #e74c3c;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            margin-top: 15px; /* Adjust the margin to center it */
+            display: block;
+            width: 100%;
+            text-align: center; /* Center the button */
+        }
+
+        .logout-btn:hover {
+            color: #c0392b;
+        }
+
+        .section {
+            margin-bottom: 20px;
+            padding: 15px;
+            border-radius: 6px;
+            background: #f9f9f9;
+            border-left: 5px solid #3498db;
+            text-align: left;
+        }
+
+        .section h2 {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+            color: #3498db;
+        }
+
+        .membership-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .membership-badge {
+            display: inline-block;
+            padding: 10px 20px;
+            font-size: 1rem;
+            font-weight: bold;
+            border-radius: 20px;
+            color: white;
+            background-color: #3498db;
+        }
+
+        .membership-btn {
+            padding: 8px 16px;
+            font-size: 0.9rem;
+            font-weight: bold;
+            color: rgb(19, 1, 1);
+            background-color: #f4da17;
+            border-radius: 6px;
+            cursor: pointer;
+            text-align: center;
+            text-decoration: none;
+        }
+
+        .membership-btn:hover {
+            background-color: #f43c17;
+            color: rgb(255, 255, 255);
+        }
+
+        .progress-bar-container {
+            margin: 10px 0;
+        }
+
+        .progress-label {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.9rem;
+            margin-bottom: 5px;
+        }
+
+        .progress-bar {
+            width: 100%;
+            background: #e0e0e0;
+            border-radius: 8px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .progress {
+            height: 16px;
+            background: #3498db;
+            width: 0;
+            transition: width 0.5s ease-in-out;
+        }
+
+        .order-card {
+            background: #ffffff;
+            margin-bottom: 10px;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .order-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .order-details {
+            font-size: 1rem;
+            color: #555;
+        }
+
+        .order-status {
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: bold;
+            text-transform: capitalize;
+        }
+
+        /* Search box container styling */
+        #searchOrderID {
+            width: 100%;
+            max-width: 400px;
+            padding: 10px 15px;
+            font-size: 1rem;
+            border-radius: 25px;
+            border: 2px solid #3498db;
+            outline: none;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            background-color: #f9f9f9;
+            color: #333;
+        }
+
+        #searchOrderID:focus {
+            border-color: #2980b9;
+            box-shadow: 0 4px 10px rgba(41, 128, 185, 0.3);
+            background-color: #ffffff;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .logout-btn {
+                font-size: 1.2rem;
+                margin-top: 15px;
+            }
+
+            .membership-container {
+                flex-direction: column;
+            }
+
+            .header h1 {
+                font-size: 1.5rem;
+            }
+
+            .section h2 {
+                font-size: 1.25rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .logout-btn {
+                font-size: 1rem;
+            }
+
+            .membership-badge {
+                font-size: 0.9rem;
+            }
+
+            .order-card {
+                padding: 12px;
+            }
+
+            .order-details {
+                font-size: 0.9rem;
+            }
+
+            .membership-btn {
+                padding: 6px 12px;
+                font-size: 0.85rem;
+            }
+        }
+
+        .section h2 {
+            text-align: center; /* Center the title */
+        }
+        
+        .membership-container {
+            display: flex;
+            flex-direction: column; /* Change the layout to column */
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="logo">
+                <img src="images/Logo.png" alt="Logo"> <!-- Replace 'logo.png' with your logo URL -->
+                <h1><strong>Bienvenido, <span id="username"></span>!</h1></strong>
+            </div>
+            <!-- Log out icon placed underneath the welcome message and centered -->
+            <button class="logout-btn" onclick="logout()">
+                <i class="fas fa-power-off"></i> Cerrar Sesión
+            </button>
+        </div>
+
+        <div class="section">
+            <h2 style="text-align: center;"><strong>Nivel de Membresía</strong></h2>
+            <div class="membership-container">
+                <div id="membership-info"></div>
+                <a href="12clickmemberform1.html" class="membership-btn">
+                    <i class="fas fa-rocket fa-arrow-up"></i> Sube tu Nivel
+                </a>
+                
+            </div>
+        </div>
+
+        <div class="section">
+            <h2 style="text-align: center;"><strong>Detalles de Uso y Disponibilidad</strong></h2>
+            <div id="limits-usage-info"></div>
+        </div>
+
+        <div class="section">
+            <h2 style="text-align: center;"><strong>Tus Pedidos y Su Estado</strong></h2>
+            <div style="text-align: center; margin-bottom: 20px;">
+                <input type="text" id="searchOrderID" placeholder="Buscar por ID de Pedido" onkeyup="searchOrder()">
+            </div>
+            <div style="text-align: center;">
+                <a href="12clickmemberform2.html" class="membership-btn">
+                    <i class="fas fa-shopping-cart"></i> Realiza tu Orden
+                </a>
+            </div><br>
+
+
+
+            <div id="orders-info"></div>
+        </div>
+
+        <div class="error" id="error-message"></div>
+    </div>
+
+    <script>
+        // Your existing JavaScript code
+        const username = sessionStorage.getItem('username');
+        if (!username) {
+            alert('No user found! Redirecting to login...');
+            window.location.href = '12clicklogin.html';
+        }
+
+        document.getElementById('username').innerText = username;
+
+        const API_URL = `https://j89c3i4kpe.execute-api.us-east-1.amazonaws.com/12ClickProduction/users/userpage?username=${encodeURIComponent(username)}`;
+
+        let ordersData = [];
+
+        // Modify fetchData function to store orders data in a global variable
+        async function fetchData() {
+            try {
+                const response = await fetch(API_URL, {
+                    method: 'GET',
+                    headers: { 'Content-Type': 'application/json' }
+                });
+
+                if (!response.ok) {
+                    throw new Error(`Failed to fetch data. Status: ${response.status}`);
+                }
+
+                const data = await response.json();
+                ordersData = data.orders;  // Store orders data for filtering
+
+                // Membership Info
+                const membershipInfo = document.getElementById("membership-info");
+                const badge = document.createElement("div");
+                badge.className = "membership-badge " + data.membership.membership.toLowerCase();
+                badge.innerText = `Membresía: ${data.membership.membership}`;
+
+                // Membresía Button
+                membershipInfo.appendChild(badge);
+
+                // Uso y Limites
+                const limitsUsageInfo = document.getElementById("limits-usage-info");
+                limitsUsageInfo.innerHTML = "";
+                Object.entries(data.limits_usage).forEach(([key, value]) => {
+                    const progressPercentage = (value.used / value.limit) * 100;
+
+                    const container = document.createElement("div");
+                    container.className = "progress-bar-container";
+
+                    const label = document.createElement("div");
+                    label.className = "progress-label";
+                    label.innerHTML = ` 
+                        <span>${key.toUpperCase()}</span>
+                        <span>${value.used}/${value.limit}</span>
+                    `;
+
+                    const bar = document.createElement("div");
+                    bar.className = "progress-bar";
+
+                    const progress = document.createElement("div");
+                    progress.className = "progress " + (progressPercentage < 50 ? "low" : progressPercentage < 80 ? "medium" : "high");
+                    progress.style.width = `${progressPercentage}%`;
+
+                    bar.appendChild(progress);
+                    container.appendChild(label);
+                    container.appendChild(bar);
+                    limitsUsageInfo.appendChild(container);
+                });
+
+                // Orders Info
+                displayOrders(data.orders);
+
+                document.getElementById('error-message').innerText = '';
+            } catch (error) {
+                document.getElementById('membership-info').innerText = 'Error loading membership info.';
+                document.getElementById('limits-usage-info').innerText = 'Error loading limits and usage.';
+                document.getElementById('orders-info').innerText = 'Error loading orders.';
+                document.getElementById('error-message').innerText = `Error: ${error.message}`;
+            }
+        }
+
+        // Search function to filter orders by Order ID
+        function searchOrder() {
+            const query = document.getElementById('searchOrderID').value.toLowerCase();
+            const filteredOrders = ordersData.filter(order => order.id.toLowerCase().includes(query));
+            displayOrders(filteredOrders);
+        }
+
+        function displayOrders(orders) {
+            const ordersInfo = document.getElementById("orders-info");
+            ordersInfo.innerHTML = "";
+
+            if (orders.length === 0) {
+                ordersInfo.innerText = "No orders found.";
+                return;
+            }
+
+            orders.forEach(order => {
+                const orderCard = document.createElement("div");
+                orderCard.className = "order-card";
+
+                const orderDetails = document.createElement("div");
+                orderDetails.className = "order-details";
+                orderDetails.innerHTML = `
+                    <p><strong>Order ID:</strong> ${order.id}</p>
+                    <p><strong>Estado:</strong> ${order.status}</p>
+                `;
+                orderCard.appendChild(orderDetails);
+
+                // Append order card to the container
+                ordersInfo.appendChild(orderCard);
+            });
+        }
+
+        // Call the fetchData function when the page loads
+        fetchData();
+
+        function logout() {
+            sessionStorage.removeItem("username");
+            window.location.href = "12clicklogin.html";
+        }
+    </script>
+
+    <!-- Bootstrap and jQuery JS -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

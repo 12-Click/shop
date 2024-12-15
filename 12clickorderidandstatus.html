@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manejo de Ordenes</title>
+    <!-- Favicon -->
+  <link rel="shortcut icon" href="images/Logo.png">
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f4f4f9;
+            padding: 20px;
+        }
+        .form-container {
+            max-width: 500px;
+            margin: auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .result p {
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="form-container mt-5">
+        <h1 class="text-center text-primary">Admin <br>Manejo de Ordenes</h1>
+        <form id="orderForm" class="mt-4">
+            <div class="mb-3">
+                <label for="username" class="form-label">Username:</label>
+                <input type="text" id="username" name="username" class="form-control" placeholder="Enter username" required>
+            </div>
+            <div class="mb-3">
+                <label for="orderId" class="form-label">Order ID:</label>
+                <input type="text" id="orderId" name="orderId" class="form-control" placeholder="Enter order ID" required>
+            </div>
+            <div class="mb-4">
+                <label for="status" class="form-label">Status:</label>
+                <select id="status" name="status" class="form-select" required>
+                    <option value="Orden Recibida">Orden Recibida</option>
+                    <option value="En Proceso con Desarrollador">En Proceso con Desarrollador</option>
+                    <option value="Orden Digital Completa">Orden Digital Completa</option>
+                </select>
+            </div>
+            <button type="submit" class="btn btn-primary w-100">Submit</button>
+        </form>
+
+        <div class="result mt-4" id="result"></div>
+    </div>
+
+    <!-- Bootstrap JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.getElementById('orderForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            const username = document.getElementById('username').value;
+            const orderId = document.getElementById('orderId').value;
+            let status = document.getElementById('status').value;
+
+            // Create timestamp (date and time only)
+            const now = new Date();
+            const date = now.toISOString().split('T')[0]; // YYYY-MM-DD
+            const time = now.toTimeString().split(' ')[0]; // HH:MM:SS
+            const timestamp = `${date} ${time}`;
+
+            // Concatenate the status with the timestamp
+            status = `${status} (Timestamp: ${timestamp})`;
+
+            const requestData = {
+                username: username,
+                "order ID": orderId,
+                status: status // Include the concatenated status and timestamp
+            };
+
+            console.log('Request Data:', requestData); // Log data to check if status contains the timestamp
+
+            fetch('https://j89c3i4kpe.execute-api.us-east-1.amazonaws.com/12ClickProduction/users/updateorderidandstatus', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(requestData)
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('result').innerHTML = `
+                    <p><strong>Message:</strong> ${data.message}</p>
+                    <p><strong>Order ID:</strong> ${data.orderID}</p>
+                    <p><strong>Status:</strong> ${data.status}</p> <!-- Status with timestamp -->
+                `;
+            })
+            .catch(error => {
+                document.getElementById('result').innerHTML = `<p class="text-danger">Error: ${error}</p>`;
+            });
+        });
+    </script>
+</body>
+</html>

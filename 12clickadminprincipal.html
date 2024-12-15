@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>12Click Dashboard</title>
+
+  <!-- Favicon -->
+  <link rel="shortcut icon" href="images/Logo.png">
+
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Font Awesome for Icons -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      background-color: #f9f9f9;
+      margin: 0;
+      padding: 0;
+    }
+
+    /* Header Section */
+    .header {
+      background-color: #014694;
+      padding: 15px;
+      color: white;
+      display: flex;
+      align-items: center;
+      position: relative;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+    }
+
+    .logo img {
+      width: 40px;
+      height: auto;
+      margin-right: 10px;
+    }
+
+    .logo h3 {
+      font-size: 22px;
+      font-weight: bold;
+      margin: 0;
+    }
+
+    .logout-btn {
+      position: absolute;
+      top: 15px;
+      right: 20px;
+      background-color: #e74c3c;
+      color: white;
+      font-size: 14px;
+      padding: 8px 15px;
+      border-radius: 5px;
+      border: none;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .logout-btn:hover {
+      background-color: #c0392b;
+    }
+
+    /* Content Section */
+    .container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      padding: 40px;
+    }
+
+    .card {
+      background-color: #ffffff;
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+      padding: 30px;
+      margin: 20px;
+      border-radius: 10px;
+      width: 250px;
+      text-align: center;
+      transition: transform 0.3s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
+    }
+
+    .card i {
+      font-size: 40px;
+      color: #2d3436;
+    }
+
+    .card h4 {
+      margin-top: 15px;
+      color: #2d3436;
+      font-size: 20px;
+    }
+
+    .card p {
+      color: #7f8c8d;
+      font-size: 14px;
+    }
+
+    .btn {
+      background-color: #129dc7;
+      color: white;
+      width: 100%;
+      border: none;
+      padding: 10px;
+      font-size: 16px;
+      border-radius: 5px;
+      margin-top: 20px;
+      transition: background-color 0.3s ease;
+    }
+
+    .btn:hover {
+      background-color: #ede159;
+    }
+
+    /* Modal (Custom Alert) */
+    .modal-content {
+      background-color: #1abc9c;
+      color: white;
+      font-size: 16px;
+      text-align: center;
+      padding: 20px;
+      border-radius: 8px;
+      border: none;
+    }
+
+    .modal-footer {
+      border: none;
+      text-align: center;
+    }
+
+    .modal-footer button {
+      background-color: #16a085;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      padding: 10px 20px;
+      cursor: pointer;
+    }
+
+    .modal-footer button:hover {
+      background-color: #1abc9c;
+    }
+
+    @media (max-width: 768px) {
+      .container {
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header Section -->
+  <div class="header">
+    <div class="logo">
+      <img src="images/Logo.png" alt="Logo">
+      <h3>12Click</h3>
+    </div>
+    <button class="logout-btn" onclick="window.location.href='12clicklogin.html'">Log Out</button>
+  </div>
+
+  <!-- Search Box -->
+<div class="text-center my-4">
+  <input 
+    type="text" 
+    id="searchBox" 
+    class="form-control w-50 mx-auto" 
+    placeholder="Que estas buscando?" 
+    onkeyup="filterCards()"
+  />
+</div>
+
+<!-- JavaScript -->
+<script>
+  function filterCards() {
+    const query = document.getElementById("searchBox").value.toLowerCase();
+    const cards = document.querySelectorAll(".card");
+    
+    cards.forEach(card => {
+      const title = card.querySelector("h4").textContent.toLowerCase();
+      const description = card.querySelector("p").textContent.toLowerCase();
+      
+      if (title.includes(query) || description.includes(query)) {
+        card.style.display = "block";
+      } else {
+        card.style.display = "none";
+      }
+    });
+  }
+</script>
+
+
+  <!-- Main Content Section -->
+  <div class="container">
+    <!-- Add User Card -->
+    <div class="card">
+      <i class="fas fa-user-plus"></i>
+      <h4>Ingresa un Nuevo Miembro</h4>
+      <p>Llena el formulario para agregar un nuevo miembro a nuestro sistema.</p>
+      <button class="btn" onclick="window.open('12clickadduser.html', '_self')">Click Here</button>
+    </div>
+
+    <div class="card">
+      <i class="fas fa-rocket"></i>
+      <h4>Actualiza la Membresia</h4>
+      <p>Llena el formulario para cambiar el nivel de la membresia por usuario.</p>
+      <button class="btn" onclick="window.open('12clickmembership.html', '_self')">Click Here</button>
+    </div>
+
+    <div class="card">
+      <i class="fas fa-arrow-up"></i>
+      <h4>Actualiza el Limite de la Membresia</h4>
+      <p>Al cambiar el nivel de la membresia aqui puedes actualizar sus limites por usuario.</p>
+      <button class="btn" onclick="window.open('12clicklimitsupdate.html', '_self')">Click Here</button>
+    </div>
+
+    <div class="card">
+      <i class="fas fa-arrow-down"></i>
+      <h4>Uso de limites de la Membresia</h4>
+      <p>Llena el formulario con el uso de los limites de la membresia por usuario.</p>
+      <button class="btn" onclick="window.open('12clickusagelimits.html', '_self')">Click Here</button>
+    </div>
+
+    <!-- Settings Card -->
+    <div class="card">
+      <i class="fas fa-shopping-cart"></i>
+      <h4>Agrega Nuevas Ordenes y Actualiza por Order ID su Status</h4>
+      <p>Crea nuevas ordenes y actualiza el estado de cada una de ellas por usuario.</p>
+      <button class="btn" onclick="window.open('12clickorderidandstatus.html', '_self')">Click Here</button>
+    </div>
+
+    <!-- Reports Card -->
+    <div class="card">
+      <i class="fas fa-info-circle"></i>
+      <h4>Ver Todos los Usuarios</h4>
+      <p>Tabla para ver todos los usuarios y su información.</p>
+      <button class="btn" onclick="window.open('12clickallusers.html', '_blank')">Click Here</button>
+    </div>
+
+     <!-- Reports Card -->
+     <div class="card">
+      <i class="fas fa-dollar-sign"></i>
+      <h4>Precios de los Servicios</h4>
+      <p>Excel con las caracteristicas y precios de nuestros productos.</p>
+      <button class="btn" onclick="window.open('https://docs.google.com/spreadsheets/d/1NMVWp9LlIZo5Y8cNmMq0lAyyVw7Z7BBC/edit?usp=sharing&ouid=106756259074752348302&rtpof=true&sd=true', '_blank')">Click Here</button>
+    </div>
+
+    <div class="card">
+      <i class="fas fa-globe"></i>
+      <h4>Pagina Web </h4>
+      <p>Excel con cotizaciones recibidas para las paginas web.</p>
+      <button class="btn" onclick="window.open('https://docs.google.com/spreadsheets/d/19dp96mbdBmdNpJS2X-xrwa3g4TFLRN7EbRmAzD14AHI/edit?usp=sharing', '_blank')">Click Here</button>
+    </div>
+
+    <div class="card">
+      <i class="fas fa-image"></i>
+      <h4>Catalogos Digitales</h4>
+      <p>Excel con ordenes recibidas por Paypal o para Enviar el link de Pago con Tarjeta de Credito.</p>
+      <button class="btn" onclick="window.open('https://docs.google.com/spreadsheets/d/1jJKhMWkJNNayZRp3NqwXpPsXHCSWIHwm6Ervt8aV4dU/edit?usp=sharing', '_blank')">Click Here</button>
+    </div>
+
+    <div class="card">
+      <i class="fas fa-mobile-alt"></i>
+      <h4>Anuncios AR</h4>
+      <p>Excel con ordenes recibidas por Paypal o para Enviar el link de Pago con Tarjeta de Credito.</p>
+      <button class="btn" onclick="window.open('https://docs.google.com/spreadsheets/d/1-2FfQFA4Ft0j9EqRDPF673k1hzwjYYoh_LVS51oAg7E/edit?usp=sharing', '_blank')">Click Here</button>
+    </div>
+
+    <div class="card">
+      <i class="fas fa-camera"></i>
+      <h4>Selfie AR</h4>
+      <p>Excel con ordenes recibidas por Paypal o para Enviar el link de Pago con Tarjeta de Credito.</p>
+      <button class="btn" onclick="window.open('https://docs.google.com/spreadsheets/d/1tvAi07Mjhkbu5hTS7Dc3m79xf3Q9jax7rPqvgqzn3yM/edit?usp=sharing', '_blank')">Click Here</button>
+    </div>
+
+    <div class="card">
+      <i class="fas fa-question-circle"></i>
+      <h4>Preguntas de los Clientes</h4>
+      <p>Excel con mensajes recibidos por la pagina web de 12Click.</p>
+      <button class="btn" onclick="window.open('https://docs.google.com/spreadsheets/d/1pvFYw4xheWuoNCnaTs8Kz0YMGMbMPlGgGS4y7muOg-k/edit?usp=sharing', '_blank')">Click Here</button>
+    </div>
+
+    <div class="card">
+      <i class="fas fa-users"></i>
+      <h4>Membresia</h4>
+      <p>Excel con ordenes recibidas por Paypal o para Enviar el link de Pago con Tarjeta de Credito.</p>
+      <button class="btn" onclick="window.open('https://docs.google.com/spreadsheets/d/1210BmBX1KDBnpG369joKZ0Q-yboVVE-oLVWz8lJ7Neo/edit?usp=sharing', '_blank')">Click Here</button>
+    </div>
+
+    <div class="card">
+      <i class="fas fa-credit-card"></i>
+      <h4>Ordenes de Miembros</h4>
+      <p>Excel con ordenes recibidas por el portal de miembros.</p>
+      <button class="btn" onclick="window.open('https://docs.google.com/spreadsheets/d/1uFnjIg1C-psIGMO4Ya9JT945bJqWyQv32ryliq6kUFU/edit?usp=sharing', '_blank')">Click Here</button>
+    </div>
+
+    <div class="card">
+      <i class="fas fa-sync"></i>
+      <h4>Cambios a Niveles de Membresia</h4>
+      <p>Excel con cambios recibidas por el portal de miembros, enviar link de pago ya sea por Paypal o Tarjeta al revisar info.</p>
+      <button class="btn" onclick="window.open('https://docs.google.com/spreadsheets/d/1NLDd0sAddLWRKEcKNOvO1UzGW5PvQaho6AJ2HnjRoas/edit?usp=sharing', '_blank')">Click Here</button>
+    </div>
+
+    <div class="card">
+      <i class="fas fa-envelope"></i>
+      <h4>Emails solo para Actualizaciones</h4>
+      <p>Excel con el correo de subscripciones por la pagina web de 12Click.</p>
+      <button class="btn" onclick="window.open('https://docs.google.com/spreadsheets/d/18fS1bt07IFh2Gk7drhAuRRH1VRfxe0wE_-yPHao6pbE/edit?usp=sharing', '_blank')">Click Here</button>
+    </div>
+
+    <div class="card">
+      <i class="fas fa-gift"></i>
+      <h4>Giveaway</h4>
+      <p>Excel con ordenes recibidas de los ganadores.</p>
+      <button class="btn" onclick="window.open('https://docs.google.com/spreadsheets/d/1xGeVMLK5HNgA3OP-s1JYAFBS0GGwSIxK4Q4eVaaN4n4/edit?usp=sharing', '_blank')">Click Here</button>
+    </div>
+
+    <div class="card">
+      <i class="fas fa-credit-card"></i>
+      <h4>Form para Pago con Tarjeta<br> (Catalogos Digitales)</h4>
+      <p>Paso 1 para pedido externo.</p>
+      <button class="btn" onclick="window.open('ecatalogformexternal1.html', '_blank')">Click Here</button>
+    </div>
+    <div class="card">
+      <i class="fas fa-credit-card"></i>
+      <h4>Form para Envio de Imagenes (Catalogos Digitales)</h4>
+      <p>Paso 2 para pedido externo, despues de confirmar que el pago con tarjeta se ha procesado correctamente.</p>
+      <button class="btn" onclick="window.open('ecatalogformexternal2.html', '_blank')">Click Here</button>
+    </div>
+
+    <div class="card">
+      <i class="fas fa-credit-card"></i>
+      <h4>Form para Pago con Tarjeta<br> (Anuncios AR)</h4>
+      <p>Paso 1 para pedido externo.</p>
+      <button class="btn" onclick="window.open('anunciosarformexternal1.html', '_blank')">Click Here</button>
+    </div>
+    <div class="card">
+      <i class="fas fa-credit-card"></i>
+      <h4>Form para Envio de Imagenes<br> (Anuncios AR)</h4>
+      <p>Paso 2 para pedido externo, despues de confirmar que el pago con tarjeta se ha procesado correctamente.</p>
+      <button class="btn" onclick="window.open('anunciosarformexternal2.html', '_blank')">Click Here</button>
+    </div>
+
+    <div class="card">
+      <i class="fas fa-credit-card"></i>
+      <h4>Form para Pago con Tarjeta<br> (Selfie AR)</h4>
+      <p>Paso 1 para pedido externo.</p>
+      <button class="btn" onclick="window.open('selfiepromoexternal1.html', '_blank')">Click Here</button>
+    </div>
+    <div class="card">
+      <i class="fas fa-credit-card"></i>
+      <h4>Form para Envio de Imagenes<br> (Selfie AR)</h4>
+      <p>Paso 2 para pedido externo, despues de confirmar que el pago con tarjeta se ha procesado correctamente.</p>
+      <button class="btn" onclick="window.open('selfiepromoexternal2.html', '_blank')">Click Here</button>
+    </div>
+
+    <div class="card">
+      <i class="fas fa-credit-card"></i>
+      <h4>Form para Pago con Tarjeta<br> (Membresia)</h4>
+      <p>Paso 1 para pedido externo.</p>
+      <button class="btn" onclick="window.open('membresiaformexternal.html', '_blank')">Click Here</button>
+    </div>
+
+    <div class="card">
+      <i class="fab fa-paypal"></i>
+      <h4>Paypal<br> (Catalogos Digitales)</h4>
+      <p>Form luego del pago por Paypal redirigido.</p>
+      <button class="btn" onclick="window.open('ecatalogform.html', '_blank')">Click Here</button>
+    </div>
+
+    <div class="card">
+      <i class="fab fa-paypal"></i>
+      <h4>Paypal<br> (Anuncios AR)</h4>
+      <p>Form luego del pago por Paypal redirigido.</p>
+      <button class="btn" onclick="window.open('anuncioarform.html', '_blank')">Click Here</button>
+    </div>
+
+    <div class="card">
+      <i class="fab fa-paypal"></i>
+      <h4>Paypal<br> (Selfie AR)</h4>
+      <p>Form luego del pago por Paypal redirigido.</p>
+      <button class="btn" onclick="window.open('selfiearform.html', '_blank')">Click Here</button>
+    </div>
+
+    <div class="card">
+      <i class="fab fa-paypal"></i>
+      <h4>Paypal<br> (Membresia)</h4>
+      <p>Form luego del pago por Paypal redirigido.</p>
+      <button class="btn" onclick="window.open('membresiaform.html', '_blank')">Click Here</button>
+    </div>
+  
+
+  </div>
+
+
+  <!-- Custom Modal Alert (Welcome and Introduction + Prayer) -->
+  <div class="modal fade" id="welcomeModal" tabindex="-1" aria-labelledby="welcomeModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-body">
+          <!-- Welcome Message -->
+          <h4>Bienvenido CEO!</h4>
+          <p>Inicia con la Bendición de Dios y La Virgen Maria.</p>
+          <br>
+          <!-- Prayer Text -->
+          <h3>Oración</h3>
+          <p>
+            Nada te turbe,
+            nada te espante,
+            todo se pasa,<br>
+            Dios no se muda,
+            la paciencia todo lo alcanza,
+            <br>quien a Dios tiene,
+            nada le falta,
+            sólo Dios basta.<br><br>Amen.
+          </p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn" data-bs-dismiss="modal">Got it</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bootstrap JS and dependencies -->
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
+
+  <!-- Show the modal alert when the page loads -->
+  <script>
+    window.onload = function() {
+      var myModal = new bootstrap.Modal(document.getElementById('welcomeModal'));
+      myModal.show();
+    }
+  </script>
+
+</body>
+</html>
