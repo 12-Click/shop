@@ -1,0 +1,375 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="12Click | Soluciones Digitales: sistemas web, portales para comunidades, experiencias AR y manejo de redes sociales para tu negocio.">
+<title>12Click | Soluciones Digitales</title>
+<script>
+/* Backend address (AWS Lambda Function URL, no trailing slash) */
+window.API_BASE="https://yro2vqvj2taowk23itvbfpvxx40txvjh.lambda-url.us-east-1.on.aws";
+</script>
+<script>
+/* Asset finder: if "assets/..." can't be found from this page's folder (e.g. Live Server opened from another folder),
+   retry from common alternative locations (silently). */
+(function(){
+var PREFIXES=["","public/","../public/","/public/","/","../","scripts/","../scripts/","/scripts/","scripts/assets/../","../../"],bad={},tries=new WeakMap();
+function next(el,attr){
+  var orig=el.getAttribute("data-orig-"+attr)||el.getAttribute(attr);
+  if(!/^assets\//.test(orig))return false;
+  el.setAttribute("data-orig-"+attr,orig);
+  var i=(tries.get(el)||0)+1;tries.set(el,i);
+  if(i>=PREFIXES.length)return false;
+  var url=PREFIXES[i]+orig;
+  if(el.tagName==="SCRIPT"){var s=document.createElement("script");s.src=url;s.setAttribute("data-orig-src",orig);tries.set(s,i);el.parentNode.insertBefore(s,el.nextSibling);return true}
+  el.setAttribute(attr,url);return true}
+window.addEventListener("error",function(e){
+  var el=e.target;if(!el||!el.tagName)return;
+  var attr=el.tagName==="LINK"?"href":"src";
+  if(!["IMG","SCRIPT","LINK"].includes(el.tagName))return;
+  next(el,attr);
+},true);
+})();
+</script>
+
+<link rel="icon" type="image/png" href="assets/favicon.png"><link rel="apple-touch-icon" href="assets/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.css" rel="stylesheet">
+<style>
+:root{--navy:#052b5c;--blue:#009efc;--blue-d:#0a7fd1;--gold:#f9c466;--muted:#5b6b82;--soft:#f1f8ff;--line:#dbe8f5;--bs-body-font-family:"Plus Jakarta Sans",system-ui,-apple-system,"Segoe UI",sans-serif}
+html{scroll-padding-top:76px;scroll-behavior:smooth}
+body{font-family:var(--bs-body-font-family);color:var(--navy);background:#fff;line-height:1.6}
+h1,h2,h3,h4,h5{letter-spacing:-.02em}
+.text-secondary{color:var(--muted)!important}
+.navbar{background:rgba(255,255,255,.94);backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+.navbar .container{padding-top:.4rem;padding-bottom:.4rem}
+.nav-link{font-weight:600;color:var(--navy);font-size:.95rem}.nav-link:hover{color:var(--blue-d)}
+.hero{padding:6.5rem 0 2rem;background:linear-gradient(180deg,var(--soft),#fff)}
+.hero h1{font-size:clamp(2.1rem,4.6vw,3.5rem);line-height:1.08;font-weight:800;letter-spacing:-.035em;margin-bottom:1rem}
+.hero .lead{font-size:1.08rem;color:var(--muted);max-width:560px;margin-bottom:1.5rem}
+.hero-checks{display:flex;flex-wrap:wrap;gap:.5rem 1.4rem;margin-top:1.5rem;font-size:.9rem;color:var(--muted);font-weight:500}
+.hero-checks i{color:var(--blue);margin-right:.4rem}
+.mascot{max-height:400px;width:auto;filter:drop-shadow(0 18px 24px rgba(5,43,92,.15))}
+.btn-primary{--bs-btn-bg:var(--blue);--bs-btn-border-color:var(--blue);--bs-btn-hover-bg:var(--blue-d);--bs-btn-hover-border-color:var(--blue-d);--bs-btn-active-bg:var(--blue-d);--bs-btn-active-border-color:var(--blue-d);--bs-btn-disabled-bg:var(--blue);--bs-btn-disabled-border-color:var(--blue);border-radius:12px;font-weight:700;padding:.7rem 1.3rem}
+.btn-outline-dark{--bs-btn-color:var(--navy);--bs-btn-border-color:var(--navy);--bs-btn-hover-bg:var(--navy);--bs-btn-hover-border-color:var(--navy);border-radius:12px;font-weight:700;padding:.7rem 1.3rem}
+.btn-sm{padding:.45rem 1rem;border-radius:10px}
+.lang-switch{display:inline-flex;border:1.5px solid var(--line);border-radius:10px;overflow:hidden;background:#fff}
+.lang-switch button{border:0;background:transparent;color:var(--muted);font-weight:700;font-size:.8rem;padding:.38rem .7rem;line-height:1.2;cursor:pointer;transition:background .15s,color .15s}
+.lang-switch button:hover{color:var(--navy)}
+.lang-switch button[aria-pressed="true"]{background:var(--navy);color:#fff}
+.cred{padding:0 0 .5rem}
+.cred-card{display:grid;grid-template-columns:auto 1fr;align-items:center;gap:2.25rem;background:#fff;border:1px solid var(--line);border-radius:24px;padding:1.75rem 2.25rem;box-shadow:0 14px 40px rgba(5,43,92,.08)}
+.cred-badge{width:240px;height:auto;display:block;filter:drop-shadow(0 8px 14px rgba(5,43,92,.14))}
+.cred-card h2{font-size:clamp(1.35rem,2.6vw,1.9rem);font-weight:800;margin:0 0 .5rem}
+.cred-card p{color:var(--muted);margin:0 0 1rem;max-width:560px}
+.cred-list{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:.6rem 1.5rem;font-weight:600;font-size:.93rem}
+.cred-list i{color:var(--blue);margin-right:.45rem}
+.section{padding:3.75rem 0}.soft{background:var(--soft)}
+.section-head{max-width:640px;margin-bottom:2rem}
+.section-head h2{font-size:clamp(1.6rem,3vw,2.2rem);font-weight:800;margin:0 0 .5rem}
+.section-head p{margin:0;color:var(--muted)}
+.card-clean{border:1px solid var(--line);border-radius:18px;background:#fff;box-shadow:0 8px 28px rgba(5,43,92,.05)}
+.service-card{height:100%;padding:1.4rem;border-top:3px solid var(--blue)}
+.service-card h5{font-size:1.02rem;font-weight:700;margin:.9rem 0 .4rem}.service-card p{font-size:.92rem;margin:0}
+.icon-box{width:44px;height:44px;display:grid;place-items:center;border-radius:12px;background:#e6f4ff;color:var(--blue-d);font-size:1.25rem}
+.form-label{font-size:.9rem}
+.form-control,.form-select{border-radius:10px;padding:.65rem .85rem;border-color:#cfdeee}
+.form-control:focus,.form-select:focus{border-color:var(--blue);box-shadow:0 0 0 .2rem rgba(0,158,252,.15)}
+.product-choice{border:1px solid var(--line);border-radius:14px;padding:.9rem 1rem;cursor:pointer;height:100%;transition:border-color .15s,background .15s}
+.product-choice:hover{border-color:#9fd3f7}
+.product-choice.active{border-color:var(--blue);background:#f0f9ff;box-shadow:0 0 0 2px rgba(0,158,252,.14)}
+.product-choice input{accent-color:var(--blue);width:1.1rem;height:1.1rem;flex:0 0 auto}
+.product-choice .pname{font-weight:700;font-size:.95rem;line-height:1.35}.product-choice .pdesc{font-size:.84rem;color:var(--muted);margin-top:.15rem}
+.product-budget{display:none}.product-choice.active .product-budget{display:block}
+.step{display:flex;gap:1rem}.step-num{flex:0 0 38px;height:38px;border-radius:50%;background:var(--navy);color:#fff;display:grid;place-items:center;font-weight:800;font-size:.95rem}
+.step h5{font-size:1rem;font-weight:700;margin-bottom:.15rem}.step p{font-size:.92rem}
+footer{background:var(--navy);color:#c5d6ea}
+footer img.flogo{height:38px;width:auto}
+footer a.flink{color:#c5d6ea;text-decoration:none;font-size:.88rem}footer a.flink:hover{color:#fff;text-decoration:underline}
+.footer-legal{display:flex;flex-wrap:wrap;justify-content:center;gap:.4rem 1.5rem}
+.footer-follow{font-size:.85rem;color:#9db6d3;margin-bottom:.6rem}
+.social-links{display:flex;justify-content:center;gap:.75rem}
+.social-links a{width:42px;height:42px;display:grid;place-items:center;border-radius:50%;border:1.5px solid rgba(197,214,234,.35);color:#fff;font-size:1.15rem;text-decoration:none;transition:background .15s,border-color .15s,transform .15s}
+.social-links a:hover{background:var(--blue);border-color:var(--blue);transform:translateY(-2px)}
+.footer-divider{border-top:1px solid rgba(197,214,234,.18)}
+.legal-body h3{font-size:1.02rem;font-weight:800;margin:1.4rem 0 .4rem}.legal-body li{margin-bottom:.3rem}.legal-body p,.legal-body li{color:#33465f}
+.cookie-row{display:flex;justify-content:space-between;align-items:flex-start;gap:1rem;padding:.9rem 0;border-top:1px solid var(--line)}
+.form-check-input:checked{background-color:var(--blue);border-color:var(--blue)}
+:focus-visible{outline:3px solid rgba(0,158,252,.55);outline-offset:2px}
+@media(max-width:991px){.hero{padding:5.5rem 0 2rem;text-align:center}.hero .lead{margin-left:auto;margin-right:auto}.hero .btns,.hero-checks{justify-content:center}.mascot{max-height:280px}}
+@media(max-width:767px){.section{padding:2.75rem 0}.cred-card{grid-template-columns:1fr;justify-items:center;text-align:center;padding:1.5rem 1.25rem;gap:1.25rem}.cred-badge{width:180px}.cred-list{justify-content:center}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important}}
+</style>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg fixed-top">
+<div class="container"><a class="navbar-brand me-4" href="#"><img src="assets/12click-logo.png" alt="12Click Soluciones Digitales" style="height:38px;width:auto"></a>
+<div class="lang-switch ms-auto me-2 order-lg-last ms-lg-3 me-lg-0" role="group" aria-label="Idioma / Language"><button type="button" data-lang="es" aria-pressed="true" title="Español">ES</button><button type="button" data-lang="en" aria-pressed="false" title="English">EN</button></div>
+<button class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#nav" data-i18n-aria="menu" aria-label="Menú"><span class="navbar-toggler-icon"></span></button>
+<div id="nav" class="collapse navbar-collapse"><ul class="navbar-nav ms-auto align-items-lg-center gap-lg-3">
+<li><a class="nav-link" href="#process" data-i18n="nav_process">Beneficios</a></li><li><a class="nav-link" href="#services" data-i18n="nav_services">Servicios</a></li><li><a class="btn btn-primary btn-sm mt-2 mt-lg-0" href="#quote" data-i18n="nav_quote">Solicitar Cotización</a></li>
+</ul></div></div></nav>
+
+<header class="hero"><div class="container"><div class="row align-items-center g-4"><div class="col-lg-7">
+<h1 data-i18n="hero_title">Tecnología que impulsa tu futuro digital.</h1>
+<p class="lead" data-i18n="hero_lead">Desarrollamos el ecosistema digital que tu organización necesita, desde portales inteligentes para comunidades, plataformas web optimizados para empresas, hasta experiencias interactivas en realidad aumentada y estrategias de redes sociales.</p>
+<div class="d-flex flex-wrap gap-3 btns"><a href="#quote" class="btn btn-primary"><span data-i18n="hero_cta">Iniciar Proyecto</span> <i class="bi bi-arrow-right ms-2"></i></a><a href="#services" class="btn btn-outline-dark" data-i18n="hero_secondary">Explorar Soluciones</a></div>
+<div class="hero-checks"><span><i class="bi bi-check-circle-fill"></i><span data-i18n="chk1">Soporte Continuo</span></span><span><i class="bi bi-check-circle-fill"></i><span data-i18n="chk2">Diseño Estrategico</span></span><span><i class="bi bi-check-circle-fill"></i><span data-i18n="chk3">Arquitectura Multidispositivo</span></span></div>
+</div><div class="col-lg-5 text-center"><img src="assets/12click-mascot.webp" data-i18n-alt="mascot_alt" alt="Mascota de 12Click con laptop" class="img-fluid mascot" width="400" height="400"></div></div></div></header>
+
+<section class="cred" aria-labelledby="credTitle"><div class="container"><div class="cred-card">
+<img class="cred-badge" src="assets/google-cloud-engineering.png" data-i18n-alt="badge_alt" alt="Certificado Google Cloud Engineering" width="240" height="276">
+<div><h2 id="credTitle" data-i18n="cred_title">Equipo Certificado en Google Cloud Engineering</h2><p data-i18n="cred_text">Tu infraestructura está diseñada y gestionada por profesionales certificados en Google Cloud, garantizando estabilidad, alto rendimiento y una base tecnológica sólida para tu proyecto.</p>
+<ul class="cred-list"><li><i class="bi bi-lightning-charge-fill"></i><span data-i18n="cred1">Máximo Rendimiento</span></li><li><i class="bi bi-shield-check"></i><span data-i18n="cred2">Seguridad Cloud</span></li><li><i class="bi bi-graph-up-arrow"></i><span data-i18n="cred3">Disponibilidad Global</span></li></ul></div>
+</div></div></section>
+
+<section id="process" class="section"><div class="container"><div class="row align-items-center g-4 g-lg-5"><div class="col-lg-6"><div class="section-head mb-0"><h2 data-i18n="proc_title">Llevamos tu visión al siguiente nivel.</h2><p data-i18n="proc_sub">Impulsamos tu marca o comunidad con tecnología eficiente, diseñada para acelerar tu presencia en línea de forma simple y directa.</p></div></div>
+<div class="col-lg-5 offset-lg-1"><div class="vstack gap-3"><div class="step"><div class="step-num">1</div><div><h5 data-i18n="st1t">Innovación a Tu medida</h5><p class="text-secondary mb-0" data-i18n="st1d">Dinos qué quieres lograr, resolver o construir, y elegimos la herramienta que más rápido ponga en marcha tu visión.</p></div></div><div class="step"><div class="step-num">2</div><div><h5 data-i18n="st2t">Despliegue ágil y optimizado</h5><p class="text-secondary mb-0" data-i18n="st2d">Construimos y publicamos tu plataforma con altos estándares, dejándola lista para operar desde el primer día.</p></div></div><div class="step"><div class="step-num">3</div><div><h5 data-i18n="st3t">Conexiones reales y fluidas</h5><p class="text-secondary mb-0" data-i18n="st3d">Recibe y mantén todos tus contactos e interacciones perfectamente organizados en un solo lugar.</p></div></div></div></div></div></div></section>
+
+<section id="services" class="section soft"><div class="container"><div class="section-head"><h2 data-i18n="svc_title">Soluciones creadas alrededor de lo que necesitas.</h2></div><div id="servicesGrid" class="row g-3 justify-content-center"></div></div></section>
+
+<section id="quote" class="section"><div class="container"><div class="row justify-content-center"><div class="col-xl-9">
+<div class="section-head text-center mx-auto"><h2 data-i18n="form_title">Cuéntanos qué proyecto quieres impulsar.</h2></div>
+<div class="card-clean p-4 p-md-4"><form id="quoteForm">
+<div class="row g-3"><div class="col-md-4"><label class="form-label fw-semibold" data-i18n="f_name">Nombre *</label><input class="form-control" name="name" required autocomplete="name"></div><div class="col-md-4"><label class="form-label fw-semibold" data-i18n="f_email">Email *</label><input type="email" class="form-control" name="email" required autocomplete="email"></div><div class="col-md-4"><label class="form-label fw-semibold" data-i18n="f_company">Empresa / Organización</label><input class="form-control" name="company" autocomplete="organization"></div></div>
+<hr class="my-4"><h5 class="fw-bold mb-1" data-i18n="f_which">¿Qué solución deseas cotizar? *</h5><p class="text-secondary small mb-3" data-i18n="f_which_sub">Puedes seleccionar varias opciones, cada una se incluirá como un elemento independiente en tu cotización.</p>
+<div id="productChoices" class="row g-3"></div>
+<div class="mt-4"><label class="form-label fw-semibold" data-i18n="f_details">Detalles del proyecto</label><textarea class="form-control" name="message" rows="4" data-i18n-ph="f_details_ph" placeholder="Describe brevemente lo qué necesitas."></textarea></div>
+<div class="d-flex justify-content-end mt-4"><button class="btn btn-primary" type="submit"><span data-i18n="f_submit">Enviar solicitud</span> <i class="bi bi-arrow-right ms-2"></i></button></div>
+<div id="formAlert" class="mt-3 empty-hide"></div>
+</form></div></div></div></div></section>
+
+<footer class="py-4"><div class="container">
+<div class="d-flex flex-wrap align-items-center justify-content-center gap-3 mb-3 text-center"><div class="d-flex flex-wrap align-items-center justify-content-center gap-3"><img class="flogo" src="assets/12click-logo-white.png" alt="12Click"><span class="small" data-i18n="footer_tag">Impulsando el futuro digital con visión, sabiduría y propósito.</span></div></div>
+<nav class="footer-legal" aria-label="Legal"><a class="flink" href="#" data-legal="privacy" data-i18n="footer_privacy">Política de Privacidad</a><a class="flink" href="#" data-legal="terms" data-i18n="footer_terms">Términos de Uso</a><a class="flink" href="#" data-cookie-settings data-i18n="footer_cookies">Configuración de Cookies</a><a class="flink" href="#" data-legal="dmca">DMCA</a></nav>
+<div class="text-center mt-4"><div class="footer-follow" data-i18n="footer_follow">Síguenos en redes sociales</div>
+<div class="social-links">
+<a href="https://www.facebook.com/12clickfb?mibextid=wwXIfr&amp;rdid=SIY5Htvcw35NABeO&amp;share_url=https%3A%2F%2Fwww.facebook.com%2Fshare%2F1ELG9ByqJY%2F%3Fmibextid%3DwwXIfr" target="_blank" rel="noopener noreferrer" aria-label="Facebook" title="Facebook"><i class="bi bi-facebook"></i></a>
+<a href="https://www.instagram.com/12click_?igsh=bTZ5enE0M2ZvcHhl" target="_blank" rel="noopener noreferrer" aria-label="Instagram" title="Instagram"><i class="bi bi-instagram"></i></a>
+<a href="https://www.tiktok.com/@12click_?_r=1&amp;_t=ZS-98VHRoe2YPE" target="_blank" rel="noopener noreferrer" aria-label="TikTok" title="TikTok"><i class="bi bi-tiktok"></i></a>
+</div></div>
+<div class="small text-center mt-4">© <span id="year"></span> 12Click. <span data-i18n="footer_rights">Todos los derechos reservados.</span></div>
+</div></footer>
+
+<div class="modal fade" id="legalModal" tabindex="-1" aria-labelledby="legalTitle" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable modal-lg"><div class="modal-content" style="border-radius:18px"><div class="modal-header"><h2 class="modal-title h5 fw-bold" id="legalTitle"></h2><button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button></div><div class="modal-body legal-body" id="legalBody"></div></div></div></div>
+
+<div class="modal fade" id="cookieModal" tabindex="-1" aria-labelledby="cookieTitle" aria-hidden="true"><div class="modal-dialog modal-dialog-centered"><div class="modal-content" style="border-radius:18px"><div class="modal-header"><h2 class="modal-title h5 fw-bold" id="cookieTitle" data-i18n="ck_title">Configuración de Cookies</h2><button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button></div><div class="modal-body pt-2">
+<p class="text-secondary small" data-i18n="ck_intro">Elige qué datos puede guardar este sitio en tu navegador. No usamos cookies de publicidad ni de seguimiento.</p>
+<div class="cookie-row"><div><div class="fw-semibold" data-i18n="ck_ess">Esenciales</div><div class="small text-secondary" data-i18n="ck_ess_d">Necesarias para que el sitio funcione y se mantenga seguro. Siempre activas.</div></div><div class="form-check form-switch m-0"><input class="form-check-input" type="checkbox" checked disabled aria-label="Essential"></div></div>
+<div class="cookie-row"><div><div class="fw-semibold" data-i18n="ck_fun">Funcionales</div><div class="small text-secondary" data-i18n="ck_fun_d">Recuerdan tu idioma (ES/EN) para tu próxima visita. Si las desactivas, se borran.</div></div><div class="form-check form-switch m-0"><input class="form-check-input" type="checkbox" id="ckFunctional" aria-label="Functional"></div></div>
+</div><div class="modal-footer"><button type="button" class="btn btn-outline-dark btn-sm" data-bs-dismiss="modal" data-i18n="ck_cancel">Cancelar</button><button type="button" class="btn btn-primary btn-sm" id="ckSave" data-i18n="ck_save">Guardar preferencias</button></div></div></div></div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+const I18N={
+es:{title:"12Click | Soluciones Digitales — Sistemas que impulsan tu negocio",meta:"12Click | Soluciones Digitales: sistemas web, portales para comunidades, experiencias AR y manejo de redes sociales para tu negocio.",menu:"Menú",
+nav_services:"Servicios",nav_process:"Vende más",nav_quote:"Solicitar cotización",
+hero_title:"Más clientes están a un clic de distancia.",hero_lead:"Creamos catálogos digitales y sistemas web que venden, manejamos tus redes sociales y diseñamos experiencias AR que la gente comparte, para que consigas clientes desde el primer día.",hero_cta:"Quiero más clientes",hero_secondary:"Ver soluciones",chk1:"Lanzamiento rápido",chk2:"Diseño que convierte",chk3:"Listo para celular",
+mascot_alt:"Mascota de 12Click con laptop",badge_alt:"Certificado Google Cloud Engineering",cred_title:"Equipo certificado en Google Cloud Engineering",cred_text:"Tu proyecto lo construye un equipo con certificado en Google Cloud Engineering, para que tu negocio funcione rápido, seguro y listo para crecer.",cred1:"Sitios rápidos y siempre disponibles",cred2:"Seguridad desde el diseño",cred3:"Listo para crecer contigo",
+svc_title:"Soluciones creadas alrededor de lo que tu negocio necesita.",svc_sub:"Cada servicio se cotiza por separado. Sin paquetes obligatorios.",
+proc_title:"Empieza a conseguir clientes desde el primer día.",proc_sub:"Lanzamos rápido lo que tu negocio necesita para atraer, convertir y vender más, sin vueltas ni esperas.",
+st1t:"Cuéntanos tu meta",st1d:"Dinos qué quieres vender o lograr y elegimos la solución que más rápido te trae clientes.",st2t:"Lo lanzamos rápido",st2d:"Construimos y publicamos tu solución lista para atraer y convertir visitas en clientes.",st3t:"Empieza a vender",st3d:"Recibe contactos, pedidos y clientes nuevos desde tu web y tus redes sociales.",
+form_title:"Cuéntanos qué quieres construir.",form_sub:"No pedimos número de teléfono. Solo necesitamos tu email para dar seguimiento.",f_name:"Nombre *",f_email:"Email *",f_company:"Empresa / organización",
+f_which:"¿Qué solución deseas cotizar? *",f_which_sub:"Selecciona cada solución por separado. Cada una permanecerá como una línea independiente de la cotización.",f_details:"Detalles del proyecto",f_details_ph:"¿Qué quieres lograr? ¿Qué debería hacer la solución?",f_submit:"Enviar solicitud",sending:"Enviando…",budget:"Presupuesto",budget_aria:"Presupuesto mensual aproximado",budget_monthly:"Presupuesto mensual aproximado",per_mo:"/mes",
+err_select:"Selecciona al menos un servicio.",err_generic:"No se pudo enviar la solicitud",ok_title:"Solicitud recibida.",ok_text:"Gracias. Revisaremos tu proyecto y te responderemos por email.",
+footer_privacy:"Política de Privacidad",footer_terms:"Términos de Uso",footer_cookies:"Configuración de Cookies",footer_follow:"Síguenos en redes sociales",ck_title:"Configuración de Cookies",ck_intro:"Elige qué datos puede guardar este sitio en tu navegador. No usamos cookies de publicidad ni de seguimiento.",ck_ess:"Esenciales",ck_ess_d:"Necesarias para que el sitio funcione y se mantenga seguro. Siempre activas.",ck_fun:"Funcionales",ck_fun_d:"Recuerdan tu idioma (ES/EN) para tu próxima visita. Si las desactivas, se borran.",ck_cancel:"Cancelar",ck_save:"Guardar preferencias",footer_tag:"Soluciones digitales para negocios que quieren avanzar.",footer_rights:"Todos los derechos reservados."},
+en:{title:"12Click | Digital Solutions — Systems that drive your business",meta:"12Click | Digital Solutions: web systems, community portals, AR experiences and social media management for your business.",menu:"Menu",
+nav_services:"Services",nav_process:"Sell more",nav_quote:"Request a quote",
+hero_title:"More customers are one click away.",hero_lead:"We build digital catalogs and websites that sell, run your social media and create AR experiences people share, so you start winning customers from day one.",hero_cta:"I want more customers",hero_secondary:"See solutions",chk1:"Fast launch",chk2:"Design that converts",chk3:"Mobile-ready",
+mascot_alt:"12Click mascot with a laptop",badge_alt:"Google Cloud Engineering certificate",cred_title:"Google Cloud Engineering certified team",cred_text:"Your project is built by a team with a Google Cloud Engineering certificate, so your business runs fast, stays secure and is ready to grow.",cred1:"Fast, always-on websites",cred2:"Security by design",cred3:"Built to grow with you",
+svc_title:"Solutions built around what your business needs.",svc_sub:"Every service is quoted separately. No forced bundles.",
+proc_title:"Start winning customers from day one.",proc_sub:"We launch what your business needs to attract, convert and sell more, with no detours and no waiting.",
+st1t:"Tell us your goal",st1d:"Tell us what you want to sell or achieve and we pick the solution that brings customers fastest.",st2t:"We launch it fast",st2d:"We build and publish your solution, ready to turn visitors into customers.",st3t:"Start selling",st3d:"Get leads, orders and new customers from your website and social media.",
+form_title:"Tell us what you want to build.",form_sub:"We don't ask for a phone number. We only need your email to follow up.",f_name:"Name *",f_email:"Email *",f_company:"Company / organization",
+f_which:"Which solution would you like quoted? *",f_which_sub:"Select each solution separately. Each one stays as its own line in the quote.",f_details:"Project details",f_details_ph:"What do you want to achieve? What should the solution do?",f_submit:"Send request",sending:"Sending…",budget:"Budget",budget_aria:"Approximate monthly budget",budget_monthly:"Approximate monthly budget",per_mo:"/mo",
+err_select:"Select at least one service.",err_generic:"We couldn't send your request",ok_title:"Request received.",ok_text:"Thank you. We'll review your project and reply by email.",
+footer_privacy:"Privacy Policy",footer_terms:"Terms of Use",footer_cookies:"Cookie Settings",footer_follow:"Follow us on social media",ck_title:"Cookie Settings",ck_intro:"Choose what data this site may store in your browser. We do not use advertising or tracking cookies.",ck_ess:"Essential",ck_ess_d:"Needed for the site to work and stay secure. Always on.",ck_fun:"Functional",ck_fun_d:"Remember your language (ES/EN) for your next visit. If you turn them off, they are deleted.",ck_cancel:"Cancel",ck_save:"Save preferences",footer_tag:"Digital solutions for businesses that want to move forward.",footer_rights:"All rights reserved."}
+};
+const fallbackProducts=[
+{id:"digital-catalogs",i18n:{es:{name:"Catálogos Digitales",description:"Catálogos interactivos de tus productos y servicios, listos para compartir por WhatsApp y redes sociales."},en:{name:"Digital Catalogs",description:"Interactive catalogs of your products and services, ready to share on WhatsApp and social media."}}},
+{id:"portal-smart",i18n:{es:{name:"Portal SMART | Comunidades Residenciales Conectadas",description:"Plataforma digital para comunidades residenciales, administradores y residentes."},en:{name:"Portal SMART | Connected Residential Communities",description:"Digital platform for residential communities, administrators and residents."}}},
+{id:"web-optimized",i18n:{es:{name:"Sistemas Web Optimizados",description:"Sistemas web profesionales, adaptables y enfocados en conversión, a la medida de tu negocio."},en:{name:"Optimized Web Systems",description:"Professional, responsive, conversion-focused web systems tailored to your business."}}},
+{id:"ar-brands",i18n:{es:{name:"Experiencias AR para Marcas",description:"Experiencias interactivas de realidad aumentada para promocionar tu marca, productos y campañas."},en:{name:"AR Experiences for Brands",description:"Interactive augmented-reality experiences to promote your brand, products and campaigns."}}},
+{id:"ar-parties",i18n:{es:{name:"Experiencias AR para Fiestas",description:"Filtros y experiencias de realidad aumentada para cumpleaños, bodas y celebraciones."},en:{name:"AR Experiences for Parties",description:"Augmented-reality filters and experiences for birthdays, weddings and celebrations."}}},
+{id:"social-media",i18n:{es:{name:"Manejo de Redes Sociales",description:"Estrategia, contenido y administración de tus redes para atraer clientes y fortalecer tu marca."},en:{name:"Social Media Management",description:"Strategy, content and management of your social networks to attract customers and strengthen your brand."}}}
+];
+const icons={"digital-catalogs":"bi-journal-richtext","portal-smart":"bi-buildings","web-optimized":"bi-window-stack","ar-brands":"bi-stars","ar-parties":"bi-balloon-heart","social-media":"bi-megaphone"};
+const budgets=[50,100,250,500,1000,2500,5000,10000];
+let lang="es",products=fallbackProducts;
+const t=k=>(I18N[lang]&&I18N[lang][k])||I18N.es[k]||k;
+function initialLang(){try{const s=localStorage.getItem("12click_lang");if(s&&I18N[s])return s}catch(e){}return "es"}
+/* Spanish text is read from the visible HTML itself, so editing the text in the page markup (or in I18N.en for English) is what changes the site. */
+function syncSpanishFromHtml(){document.querySelectorAll("[data-i18n]").forEach(el=>{const tx=el.textContent.trim();if(tx)I18N.es[el.dataset.i18n]=tx});document.querySelectorAll("[data-i18n-ph]").forEach(el=>{if(el.placeholder)I18N.es[el.dataset.i18nPh]=el.placeholder});document.querySelectorAll("[data-i18n-alt]").forEach(el=>{if(el.alt)I18N.es[el.dataset.i18nAlt]=el.alt});if(document.title)I18N.es.title=document.title;const m=document.querySelector('meta[name="description"]');if(m&&m.content)I18N.es.meta=m.content}
+syncSpanishFromHtml();
+function applyLang(){
+document.documentElement.lang=lang;document.title=t("title");document.querySelector('meta[name="description"]').setAttribute("content",t("meta"));
+document.querySelectorAll("[data-i18n]").forEach(el=>el.textContent=t(el.dataset.i18n));
+document.querySelectorAll("[data-i18n-ph]").forEach(el=>el.placeholder=t(el.dataset.i18nPh));
+document.querySelectorAll("[data-i18n-alt]").forEach(el=>el.alt=t(el.dataset.i18nAlt));
+document.querySelectorAll("[data-i18n-aria]").forEach(el=>el.setAttribute("aria-label",t(el.dataset.i18nAria)));
+document.querySelectorAll(".lang-switch button").forEach(b=>b.setAttribute("aria-pressed",String(b.dataset.lang===lang)));
+document.querySelectorAll("[data-pname]").forEach(el=>{const p=products.find(x=>x.id===el.dataset.pname);if(p)el.textContent=(p.i18n[lang]||p.i18n.es).name});
+document.querySelectorAll("[data-pdesc]").forEach(el=>{const p=products.find(x=>x.id===el.dataset.pdesc);if(p)el.textContent=(p.i18n[lang]||p.i18n.es).description});
+document.querySelectorAll("[data-budget-label]").forEach(l=>l.textContent=t("budget_monthly"));document.querySelectorAll("[data-budget]").forEach(sel=>{sel.setAttribute("aria-label",t("budget_aria"));[...sel.options].forEach(o=>o.textContent="$"+Number(o.value).toLocaleString("en-US")+"+ "+t("per_mo"))});
+}
+function setLang(l){lang=l;try{if(JSON.parse(localStorage.getItem("12click_cookie_prefs")||"{}").functional!==false)localStorage.setItem("12click_lang",l)}catch(e){}applyLang()}
+function moneyOptions(){return '<div class="d-none" data-budget-wrap><div class="small fw-semibold mt-2 mb-1" data-budget-label></div><select class="form-select form-select-sm product-budget" data-budget>'+budgets.map(v=>`<option value="${v}"></option>`).join("")+'</select></div>'}
+function renderProducts(){
+document.getElementById("servicesGrid").innerHTML=products.map(p=>`<div class="col-sm-6 col-lg-4"><div class="card-clean service-card"><div class="icon-box"><i class="bi ${icons[p.id]||"bi-stars"}"></i></div><h5 data-pname="${p.id}"></h5><p class="text-secondary" data-pdesc="${p.id}"></p></div></div>`).join("");
+document.getElementById("productChoices").innerHTML=products.map(p=>`<div class="col-md-6"><label class="product-choice d-block"><div class="d-flex gap-3"><input type="checkbox" class="mt-1" data-product="${p.id}"><div class="flex-grow-1"><div class="pname" data-pname="${p.id}"></div><div class="pdesc" data-pdesc="${p.id}"></div>${moneyOptions()}</div></div></label></div>`).join("");document.querySelectorAll("[data-product]").forEach(c=>{const w=c.closest(".product-choice").querySelector("[data-budget-wrap]");c.addEventListener("change",()=>w.classList.toggle("d-none",!c.checked))});
+document.querySelectorAll(".product-choice input").forEach(x=>x.addEventListener("change",e=>e.target.closest(".product-choice").classList.toggle("active",e.target.checked)))}
+async function init(){
+lang=initialLang();
+try{const r=await fetch(window.API_BASE+"/api/products");if(r.ok){const api=(await r.json()).products||[];products=api.map(p=>({id:p.id,i18n:(fallbackProducts.find(f=>f.id===p.id)||{}).i18n||p.i18n||{es:{name:p.name,description:p.description}}}));fallbackProducts.forEach(f=>{if(!products.some(p=>p.id===f.id))products.push(f)})}}catch(e){}
+renderProducts();document.getElementById("year").textContent=new Date().getFullYear();applyLang()}
+document.querySelectorAll(".lang-switch button").forEach(b=>b.addEventListener("click",()=>setLang(b.dataset.lang)));
+document.getElementById("quoteForm").addEventListener("submit",async e=>{e.preventDefault();const f=e.currentTarget;const chosen=[...document.querySelectorAll("[data-product]:checked")].map(c=>({productId:c.dataset.product,budget:c.closest(".product-choice").querySelector("[data-budget]").value,notes:""}));
+if(!chosen.length){document.getElementById("formAlert").innerHTML='<div class="alert alert-warning mb-0" data-i18n="err_select"></div>';applyLang();return}
+const data=Object.fromEntries(new FormData(f));data.products=chosen;data.lang=lang;const btn=f.querySelector("button[type=submit]");btn.disabled=true;btn.firstElementChild.textContent=t("sending");
+try{const r=await fetch(window.API_BASE+"/api/leads",{method:"POST",headers:{"Content-Type":"application/json","X-Lang":lang},body:JSON.stringify(data)});const out=await r.json();if(!r.ok)throw new Error(out.error||t("err_generic"));
+document.getElementById("formAlert").innerHTML='<div class="alert alert-success mb-0"><strong data-i18n="ok_title"></strong> <span data-i18n="ok_text"></span></div>';applyLang();
+f.reset();document.querySelectorAll(".product-choice").forEach(x=>x.classList.remove("active"))}
+catch(err){const d=document.createElement("div");d.className="alert alert-danger mb-0";d.textContent=err.message;const box=document.getElementById("formAlert");box.innerHTML="";box.appendChild(d)}
+finally{btn.disabled=false;btn.firstElementChild.textContent=t("f_submit")}});
+init();
+
+/* ---- Legal pages & cookie settings ---- */
+const LEGAL={
+es:{
+privacy:{title:"Política de Privacidad",html:`<p class="small text-secondary">Última actualización: octubre de 2026</p>
+<p>En 12Click (“12Click”, “nosotros”) valoramos tu privacidad. Esta política explica qué datos personales recopilamos a través de este sitio, con qué fin, con quién los compartimos, cuánto tiempo los conservamos y qué derechos tienes. Al usar el sitio o enviar el formulario de cotización, aceptas el tratamiento descrito aquí.</p>
+<h3>1. Datos que recopilamos</h3>
+<ul><li><strong>Datos que nos entregas:</strong> nombre, email, empresa u organización (opcional), servicios de interés, presupuesto aproximado y cualquier detalle que escribas en el formulario. No solicitamos número de teléfono.</li>
+<li><strong>Datos técnicos mínimos:</strong> información que el servidor recibe de forma automática al atender tu visita (por ejemplo, dirección IP y tipo de navegador) y que se usa para seguridad y funcionamiento.</li>
+<li><strong>Preferencias:</strong> tu idioma (ES/EN) se guarda en tu navegador solo si aceptas las cookies funcionales.</li></ul>
+<h3>2. Para qué usamos tus datos</h3>
+<ul><li>Responder tu solicitud y enviarte una propuesta por email.</li><li>Dar seguimiento a tu proyecto y organizar nuestras cotizaciones.</li><li>Proteger el sitio contra fraude, abuso y accesos no autorizados.</li><li>Cumplir obligaciones legales y defender nuestros derechos, incluidos nuestros derechos de propiedad intelectual.</li></ul>
+<h3>3. Con quién los compartimos</h3>
+<p>No vendemos ni alquilamos tus datos. Solo los ve el equipo de 12Click y los proveedores tecnológicos estrictamente necesarios para operar el sitio, como Amazon Web Services (AWS), donde se almacenan. Podemos divulgar información si una autoridad competente lo exige conforme a la ley, o cuando sea necesario para proteger los derechos, la seguridad o la propiedad de 12Click, de nuestros clientes o de terceros.</p>
+<h3>4. Conservación y seguridad</h3>
+<p>Conservamos tus datos mientras sean necesarios para atender tu solicitud, mantener la relación comercial o cumplir obligaciones legales; después los eliminamos o anonimizamos. Usamos conexión cifrada (HTTPS), control de acceso y contraseñas protegidas. Aun así, ningún sistema es completamente infalible y no podemos garantizar seguridad absoluta.</p>
+<h3>5. Tus derechos</h3>
+<p>Puedes solicitar acceso, corrección, actualización o eliminación de tus datos, así como oponerte a su tratamiento, escribiéndonos por el formulario de contacto de este sitio. Podemos pedirte que verifiques tu identidad antes de atender la solicitud y responderemos en un plazo razonable.</p>
+<h3>6. Menores de edad</h3>
+<p>Este sitio está dirigido a empresas y adultos. No recopilamos a sabiendas datos de menores de 18 años; si detectamos que lo hicimos, los eliminaremos.</p>
+<h3>7. Enlaces y servicios de terceros</h3>
+<p>El sitio enlaza a Facebook, Instagram y TikTok. Esas plataformas tienen sus propias políticas y prácticas, sobre las cuales 12Click no tiene control ni responsabilidad.</p>
+<h3>8. Cookies</h3>
+<p>Usamos únicamente almacenamiento esencial y funcional, sin publicidad ni seguimiento. Puedes administrarlo en “Configuración de Cookies”, al pie de la página.</p>
+<h3>9. Cambios a esta política</h3>
+<p>Podemos actualizar esta política en cualquier momento. La versión vigente es la publicada en el sitio, con su fecha de última actualización. El uso continuado del sitio implica la aceptación de los cambios.</p>`},
+terms:{title:"Términos de Uso",html:`<p class="small text-secondary">Última actualización: octubre de 2026</p>
+<p>Estos Términos de Uso regulan el acceso y uso de este sitio, operado por 12Click. Al acceder o usarlo, declaras que los has leído y aceptas obligarte por ellos. Si no estás de acuerdo, no uses el sitio.</p>
+<h3>1. Uso permitido</h3>
+<p>El sitio presenta nuestros servicios y permite solicitar cotizaciones. Debes usarlo de forma lícita, con información veraz y sin perjudicar a 12Click ni a terceros.</p>
+<h3>2. Conductas prohibidas</h3>
+<ul><li>Copiar, reproducir, modificar, distribuir, publicar o crear obras derivadas del sitio o de su contenido sin autorización escrita.</li>
+<li>Usar bots, scrapers u otros medios automatizados para extraer contenido, diseños o datos, o usar el contenido para entrenar sistemas de inteligencia artificial sin permiso.</li>
+<li>Descompilar, aplicar ingeniería inversa o intentar obtener el código fuente o la estructura interna de cualquier parte del sitio.</li>
+<li>Intentar acceder a áreas privadas, evadir medidas de seguridad, introducir código malicioso o sobrecargar el sitio.</li>
+<li>Enviar contenido falso, engañoso, ofensivo o que infrinja derechos de terceros.</li>
+<li>Hacerse pasar por 12Click o por otra persona, o usar nuestra marca de manera que sugiera afiliación o respaldo.</li></ul>
+<h3>3. Propiedad intelectual</h3>
+<p>Todo el contenido del sitio y de los trabajos que creamos —incluidos diseños, interfaces, textos, código, logotipos, la mascota de 12Click, ilustraciones, imágenes, filtros y experiencias de realidad aumentada, catálogos, portales y sistemas— es propiedad de 12Click o de sus licenciantes y está protegido por las leyes de derechos de autor, marcas y demás normas de propiedad intelectual aplicables y por tratados internacionales. Se otorga al usuario únicamente una licencia limitada, revocable, no exclusiva e intransferible para ver el sitio con fines personales o de evaluación comercial. No se transfiere ningún otro derecho. “12Click” y sus logotipos son marcas de sus titulares.</p>
+<h3>4. Trabajos realizados para clientes</h3>
+<p>Salvo que un contrato escrito firmado por 12Click disponga expresamente lo contrario, los derechos de propiedad intelectual sobre los trabajos que desarrollamos permanecen en 12Click hasta que se cumplan las condiciones de pago y cesión que ese contrato establezca. Las propuestas, cotizaciones y demos son confidenciales y no pueden copiarse ni reutilizarse sin autorización.</p>
+<h3>5. Cotizaciones</h3>
+<p>Enviar una solicitud no crea un contrato ni una obligación para ninguna de las partes. Precios, alcances y plazos se confirman únicamente en una propuesta escrita aceptada. Los presupuestos indicados en el formulario son aproximados.</p>
+<h3>6. Exclusión de garantías</h3>
+<p>El sitio y su contenido se ofrecen “tal como están” y “según disponibilidad”, sin garantías de ningún tipo, expresas o implícitas, incluida la disponibilidad ininterrumpida o la ausencia de errores.</p>
+<h3>7. Limitación de responsabilidad</h3>
+<p>En la máxima medida permitida por la ley, 12Click y su equipo no serán responsables por daños indirectos, incidentales, especiales o consecuentes, ni por pérdida de datos, ingresos u oportunidades derivados del uso del sitio o de la imposibilidad de usarlo.</p>
+<h3>8. Indemnización</h3>
+<p>Aceptas mantener indemne a 12Click frente a reclamaciones, daños, costos y gastos (incluidos honorarios legales razonables) que surjan de tu incumplimiento de estos términos o de la infracción de derechos de terceros.</p>
+<h3>9. Suspensión y acciones legales</h3>
+<p>Podemos bloquear el acceso, retirar contenido o suspender el servicio a quien incumpla estos términos. Nos reservamos el derecho de ejercer todas las acciones civiles, administrativas y penales que correspondan ante usos no autorizados de nuestras obras.</p>
+<h3>10. Ley aplicable</h3>
+<p>Estos términos se rigen por las leyes aplicables en la jurisdicción donde 12Click tiene su domicilio, sin considerar normas de conflicto de leyes. Las controversias se someterán a los tribunales competentes de dicha jurisdicción.</p>
+<h3>11. Cambios y contacto</h3>
+<p>Podemos modificar estos términos en cualquier momento; la versión vigente es la publicada en el sitio y su uso continuado implica aceptación. Para consultas, escríbenos por el formulario de contacto de este sitio.</p>`},
+dmca:{title:"DMCA / Derechos de Autor",html:`<p class="small text-secondary">Última actualización: octubre de 2026</p>
+<p><strong>© 12Click. Todos los derechos reservados.</strong> Las creaciones de 12Click —diseños, código, interfaces, textos, logotipos, mascota, ilustraciones, imágenes, filtros y experiencias de realidad aumentada, catálogos, portales y sistemas— están protegidas por las leyes de derechos de autor y propiedad intelectual y por tratados internacionales. Copiarlas, reproducirlas, venderlas, modificarlas o distribuirlas sin autorización escrita está prohibido y será perseguido conforme a la ley.</p>
+<h3>1. Si alguien usa nuestras obras sin permiso</h3>
+<p>12Click puede enviar avisos de retiro (takedown) conforme a la Digital Millennium Copyright Act (DMCA, 17 U.S.C. § 512) y normas equivalentes a plataformas, proveedores de alojamiento, redes sociales, buscadores y servicios de pago, y puede iniciar las acciones civiles y penales que correspondan para proteger su obra, reclamar daños y perjuicios y recuperar costos.</p>
+<h3>2. Qué hacemos al recibir un aviso</h3>
+<p>Revisaremos el aviso y, si procede, retiraremos o deshabilitaremos el acceso al contenido señalado y notificaremos a quien lo publicó.</p>
+<h3>3. Contra-notificación</h3>
+<p>Si crees que el contenido fue retirado por error o identificación equivocada, puedes enviar una contra-notificación con: tu nombre, dirección y firma; la identificación del contenido retirado y dónde estaba; una declaración bajo pena de perjurio de que crees de buena fe que se retiró por error; y tu consentimiento a la jurisdicción de los tribunales competentes. Tras recibirla, podremos restablecer el contenido si el denunciante no inicia una acción legal en el plazo que la ley establezca.</p>
+<h3>4. Infractores reincidentes</h3>
+<p>12Click podrá suspender o bloquear el acceso a usuarios que infrinjan derechos de autor de forma repetida.</p>
+<h3>5. Avisos falsos</h3>
+<p>Presentar a sabiendas un aviso o contra-notificación falsos puede generar responsabilidad legal, incluida la obligación de pagar daños y costos.</p>`}},
+en:{
+privacy:{title:"Privacy Policy",html:`<p class="small text-secondary">Last updated: October 2026</p>
+<p>At 12Click (“12Click”, “we”, “us”) we value your privacy. This policy explains what personal data we collect through this site, why, who we share it with, how long we keep it and what rights you have. By using the site or submitting the quote form, you agree to the processing described here.</p>
+<h3>1. Data we collect</h3>
+<ul><li><strong>Data you give us:</strong> name, email, company or organization (optional), services of interest, approximate budget and any details you write in the form. We do not ask for a phone number.</li>
+<li><strong>Minimal technical data:</strong> information the server automatically receives when serving your visit (for example IP address and browser type), used for security and operation.</li>
+<li><strong>Preferences:</strong> your language (ES/EN) is stored in your browser only if you accept functional cookies.</li></ul>
+<h3>2. How we use your data</h3>
+<ul><li>To answer your request and email you a proposal.</li><li>To follow up on your project and organize our quotes.</li><li>To protect the site against fraud, abuse and unauthorized access.</li><li>To comply with legal obligations and defend our rights, including our intellectual property rights.</li></ul>
+<h3>3. Who we share it with</h3>
+<p>We do not sell or rent your data. Only the 12Click team and the technology providers strictly necessary to run the site, such as Amazon Web Services (AWS), where it is stored, can see it. We may disclose information if a competent authority requires it by law, or when necessary to protect the rights, safety or property of 12Click, our clients or others.</p>
+<h3>4. Retention and security</h3>
+<p>We keep your data as long as needed to handle your request, maintain the business relationship or meet legal obligations; afterwards we delete or anonymize it. We use encrypted connections (HTTPS), access controls and protected passwords. Even so, no system is completely infallible and we cannot guarantee absolute security.</p>
+<h3>5. Your rights</h3>
+<p>You may request access, correction, updating or deletion of your data, and object to its processing, by writing to us through the contact form on this site. We may ask you to verify your identity first and will respond within a reasonable time.</p>
+<h3>6. Minors</h3>
+<p>This site is aimed at businesses and adults. We do not knowingly collect data from anyone under 18; if we learn we have, we will delete it.</p>
+<h3>7. Third-party links and services</h3>
+<p>The site links to Facebook, Instagram and TikTok. Those platforms have their own policies and practices, over which 12Click has no control or responsibility.</p>
+<h3>8. Cookies</h3>
+<p>We only use essential and functional storage, with no advertising or tracking. You can manage it under “Cookie Settings” at the bottom of the page.</p>
+<h3>9. Changes to this policy</h3>
+<p>We may update this policy at any time. The current version is the one published on the site, with its last-updated date. Continued use of the site means you accept the changes.</p>`},
+terms:{title:"Terms of Use",html:`<p class="small text-secondary">Last updated: October 2026</p>
+<p>These Terms of Use govern access to and use of this site, operated by 12Click. By accessing or using it, you state that you have read them and agree to be bound by them. If you do not agree, do not use the site.</p>
+<h3>1. Permitted use</h3>
+<p>The site presents our services and lets you request quotes. You must use it lawfully, with truthful information, and without harming 12Click or others.</p>
+<h3>2. Prohibited conduct</h3>
+<ul><li>Copying, reproducing, modifying, distributing, publishing or creating derivative works from the site or its content without written permission.</li>
+<li>Using bots, scrapers or other automated means to extract content, designs or data, or using the content to train artificial intelligence systems without permission.</li>
+<li>Decompiling, reverse engineering or attempting to obtain the source code or internal structure of any part of the site.</li>
+<li>Attempting to access private areas, bypass security measures, introduce malicious code or overload the site.</li>
+<li>Submitting false, misleading, offensive or infringing content.</li>
+<li>Impersonating 12Click or anyone else, or using our brand in a way that suggests affiliation or endorsement.</li></ul>
+<h3>3. Intellectual property</h3>
+<p>All content on the site and in the works we create — including designs, interfaces, text, code, logos, the 12Click mascot, illustrations, images, augmented-reality filters and experiences, catalogs, portals and systems — is owned by 12Click or its licensors and is protected by copyright, trademark and other applicable intellectual property laws and international treaties. The user receives only a limited, revocable, non-exclusive, non-transferable license to view the site for personal or business-evaluation purposes. No other rights are transferred. “12Click” and its logos are trademarks of their owners.</p>
+<h3>4. Work done for clients</h3>
+<p>Unless a written contract signed by 12Click expressly provides otherwise, intellectual property rights in the work we develop remain with 12Click until the payment and assignment conditions of that contract are met. Proposals, quotes and demos are confidential and may not be copied or reused without permission.</p>
+<h3>5. Quotes</h3>
+<p>Submitting a request does not create a contract or obligation for either party. Prices, scope and timelines are confirmed only in an accepted written proposal. Budgets entered in the form are approximate.</p>
+<h3>6. Disclaimer of warranties</h3>
+<p>The site and its content are provided “as is” and “as available”, without warranties of any kind, express or implied, including uninterrupted availability or freedom from errors.</p>
+<h3>7. Limitation of liability</h3>
+<p>To the maximum extent permitted by law, 12Click and its team are not liable for indirect, incidental, special or consequential damages, or for loss of data, revenue or opportunities arising from use of, or inability to use, the site.</p>
+<h3>8. Indemnification</h3>
+<p>You agree to hold 12Click harmless from claims, damages, costs and expenses (including reasonable legal fees) arising from your breach of these terms or your infringement of third-party rights.</p>
+<h3>9. Suspension and legal action</h3>
+<p>We may block access, remove content or suspend service for anyone who breaches these terms. We reserve the right to pursue all civil, administrative and criminal remedies for unauthorized use of our works.</p>
+<h3>10. Governing law</h3>
+<p>These terms are governed by the laws applicable in the jurisdiction where 12Click is domiciled, without regard to conflict-of-law rules. Disputes will be submitted to the competent courts of that jurisdiction.</p>
+<h3>11. Changes and contact</h3>
+<p>We may modify these terms at any time; the current version is the one published on the site and continued use means acceptance. For questions, write to us through the contact form on this site.</p>`},
+dmca:{title:"DMCA / Copyright",html:`<p class="small text-secondary">Last updated: October 2026</p>
+<p><strong>© 12Click. All rights reserved.</strong> 12Click's creations — designs, code, interfaces, text, logos, mascot, illustrations, images, augmented-reality filters and experiences, catalogs, portals and systems — are protected by copyright and intellectual property laws and international treaties. Copying, reproducing, selling, modifying or distributing them without written permission is prohibited and will be pursued under the law.</p>
+<h3>1. If someone uses our work without permission</h3>
+<p>12Click may send takedown notices under the Digital Millennium Copyright Act (DMCA, 17 U.S.C. § 512) and equivalent laws to platforms, hosting providers, social networks, search engines and payment services, and may bring the civil and criminal actions available to protect its work, claim damages and recover costs.</p>
+<h3>2. What we do when we receive a notice</h3>
+<p>We will review the notice and, where appropriate, remove or disable access to the content identified and notify whoever posted it.</p>
+<h3>3. Counter-notice</h3>
+<p>If you believe the content was removed by mistake or misidentification, you may send a counter-notice with: your name, address and signature; identification of the removed content and where it appeared; a statement under penalty of perjury that you believe in good faith it was removed by mistake; and your consent to the jurisdiction of the competent courts. After receiving it, we may restore the content unless the complainant starts legal action within the period set by law.</p>
+<h3>4. Repeat infringers</h3>
+<p>12Click may suspend or block access for users who repeatedly infringe copyright.</p>
+<h3>5. False notices</h3>
+<p>Knowingly filing a false notice or counter-notice may carry legal liability, including payment of damages and costs.</p>`}}};
+let currentLegal=null;
+const legalModal=new bootstrap.Modal(document.getElementById("legalModal"));
+const cookieModal=new bootstrap.Modal(document.getElementById("cookieModal"));
+function renderLegal(){if(!currentLegal)return;const d=(LEGAL[lang]||LEGAL.es)[currentLegal];document.getElementById("legalTitle").textContent=d.title;document.getElementById("legalBody").innerHTML=d.html}
+function cookiePrefs(){try{const v=JSON.parse(localStorage.getItem("12click_cookie_prefs")||"null");if(v&&typeof v==="object")return{functional:v.functional!==false}}catch(e){}return{functional:true}}
+document.querySelectorAll("[data-legal]").forEach(a=>a.addEventListener("click",e=>{e.preventDefault();currentLegal=a.dataset.legal;renderLegal();legalModal.show()}));
+document.querySelectorAll("[data-cookie-settings]").forEach(a=>a.addEventListener("click",e=>{e.preventDefault();document.getElementById("ckFunctional").checked=cookiePrefs().functional;cookieModal.show()}));
+document.getElementById("ckSave").addEventListener("click",()=>{const f=document.getElementById("ckFunctional").checked;try{localStorage.setItem("12click_cookie_prefs",JSON.stringify({functional:f}));if(f)localStorage.setItem("12click_lang",lang);else localStorage.removeItem("12click_lang")}catch(e){}cookieModal.hide()});
+document.querySelectorAll(".lang-switch button").forEach(b=>b.addEventListener("click",renderLegal));
+</script></body></html>
