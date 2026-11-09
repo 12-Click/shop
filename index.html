@@ -234,7 +234,7 @@ if(!chosen.length){const fw=document.getElementById("formAlert");fw.innerHTML='<
 const data=Object.fromEntries(new FormData(f));data.products=chosen;data.lang=lang;const btn=f.querySelector("button[type=submit]");clearTimeout(window._faT);document.getElementById("formAlert").innerHTML="";btn.disabled=true;btn.firstElementChild.textContent=t("sending");
 try{const r=await fetch("/api/leads",{method:"POST",headers:{"Content-Type":"application/json","X-Lang":lang},body:JSON.stringify(data)});const out=await r.json();if(!r.ok)throw new Error(out.error||t("err_generic"));
 const fa=document.getElementById("formAlert");fa.innerHTML='<div class="alert alert-success mb-0"><strong data-i18n="ok_title"></strong> <span data-i18n="ok_text"></span></div>';applyLang();clearTimeout(window._faT);window._faT=setTimeout(()=>{fa.innerHTML=""},8000);
-f.reset();document.querySelectorAll(".product-choice").forEach(x=>x.classList.remove("active"))}
+f.reset();document.querySelectorAll(".product-choice").forEach(x=>x.classList.remove("active"));document.querySelectorAll("[data-budget-wrap]").forEach(w=>w.classList.add("d-none"))}
 catch(err){const d=document.createElement("div");d.className="alert alert-danger mb-0";d.textContent=err.message;const box=document.getElementById("formAlert");box.innerHTML="";box.appendChild(d)}
 finally{btn.disabled=false;btn.firstElementChild.textContent=t("f_submit")}});
 init();
